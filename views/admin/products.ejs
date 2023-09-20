@@ -1,0 +1,110 @@
+<%- include('../layouts/slidebar.ejs') %>
+<style>
+    
+        .table .category-cell {
+            max-width: 150px;
+    
+        }
+
+</style>   
+<main class="main-wrap">
+        <section class="content-main">
+            <div class="card-body">
+                <table class="table"id="myTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 200px;">Product</th>
+                            <th style="width: 200px;">Name</th>
+                            <th style="width: 200px;">Price</th>
+                            <th style="width: 200px;">Category</th>
+                            <th style="width: 200px;">Quantity</th>
+                            <th style="width: 200px;">Color</th>
+                            <th style="width: 200px;">Description</th>
+                            <th style="width: 200px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach(product=>{ %>
+                            <tr>
+                                <td>
+                                    <% if (product.image && product.image.length> 0) { %>
+                                        <img src="/uploadProduct/<%= product.image[0] %>" class="img-sm img-thumbnail"
+                                            alt="<%= product.productname %>">
+                                        <% } %>
+                                </td>
+                                <td class="category-cell">
+                                    <h6 class="mb-0">
+                                        <%= product.productname %>
+                                    </h6>
+                                </td>
+                                <td>
+                                    <%= product.productprice %>
+                                </td>
+                                <td class="category-cell">
+                                    <%= product.categoryname %>
+                                </td>
+                                <td>
+                                    <%= product.quantity %>
+                                </td>
+                                <td>
+                                    <%= product.color %>
+                                </td>
+                                <td class="category-cell">
+                                    <%= product.description %>
+                                </td>
+
+                                <td>
+                                    <a href="/admin/edit-product/<%= product._id %>"
+                                        class="btn btn-sm btn-brand rounded">
+                                        <i class="material-icons md-edit mr-5"></i>Edit
+                                    </a>
+                                    <% if (product.isListed) { %>
+                                        <a href="/admin/listproduct/<%= product._id %>"
+                                            class="btn btn-danger p-1">UnList</a>
+
+                                        <% } else { %>
+                                            <a href="/admin/unlistproduct/<%= product._id %>"
+                                                class="btn btn-success p-1">List</a>
+                                            <% } %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-area mt-30 mb-50">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-start">
+                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                        <li class="page-item"><a class="page-link" href="#">02</a></li>
+                        <li class="page-item"><a class="page-link" href="#">03</a></li>
+                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">16</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><i
+                                    class="material-icons md-chevron_right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section> <!-- content-main end// -->
+    </main>
+    <%- include('../layouts/slidefooter.ejs') %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("Document is ready.");
+          
+          var table = $('#myTable').DataTable({
+            "paging": true,          // Enable pagination
+            "pageLength": 5,        // Number of rows per page
+            "lengthMenu": [5,10, 25, 50, 75, 100],  // Dropdown options for rows per page
+          });
+        
+          table.on('draw', function() {
+            $(".paginate_button:not(.previous):not(.next)").addClass("number_button");
+          });
+        });
+
+
+        
+      </script>

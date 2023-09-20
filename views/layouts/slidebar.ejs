@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Furniture site</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="icon" href="/assets/imgs/theme/Black White Logo.png">
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.css">
+</head>
+
+<style>
+    .logo {
+        width: 10px;
+        /* Set the desired width for the image */
+        height: auto;
+        /* Automatically adjust the height to maintain aspect ratio */
+    }
+
+    .aside-top {
+        background-color: black;
+        /* You can also add other styles if needed */
+        /* color: white; */
+        /* This will change the text color to white on a black background */
+    }
+
+    /* Style the entire aside element */
+    .navbar-aside {
+        background-color: black;
+        color: white;
+        /* Set the text color to white */
+        width: 240px;
+        /* Set the width of the aside element */
+        padding: 20px;
+        /* Add padding to the aside element */
+    }
+
+    /* Style the logo */
+    .navbar-aside .logo {
+        display: block;
+        margin: 0 auto;
+        max-width: 80%;
+        /* Adjust the logo's max-width as needed */
+    }
+
+    /* Style the menu items and links */
+    .menu-aside {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu-item {
+        margin-bottom: 10px;
+        /* Add spacing between menu items */
+    }
+
+    .menu-link {
+        display: block;
+        padding: 10px;
+        color: white;
+        /* Set the text color for menu links */
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        /* Add a smooth background color transition */
+    }
+
+    .menu-link:hover {
+        /* Change the background color on hover */
+        color: black;
+        /* Set the text color for menu links on hover */
+    }
+
+    /* Style the submenu items */
+    .submenu {
+        display: none;
+    }
+
+    .menu-item.active .submenu {
+        display: block;
+    }
+
+    .submenu a {
+        color: white;
+        /* Set the text color for submenu links */
+        text-decoration: none;
+    }
+
+    .submenu a:hover {
+        text-decoration: underline;
+        /* Underline submenu links on hover */
+    }
+
+    .menu-link .text {
+        color: white
+            /* Replace 'YourColorHere' with the desired color value */
+    }
+
+    .menu-link:hover .text {
+        color: black;
+        /* Replace with the hover color */
+    }
+
+    /* Style the submenu links */
+    .submenu a {
+        color: white;
+        /* Replace with the default color */
+        text-decoration: none;
+        /* Remove underline from links */
+        /* Add a smooth color transition effect */
+    }
+
+    /* Change the color on hover for submenu links */
+    .submenu a:hover {
+        color: black;
+        /* Replace with the hover color */
+    }
+
+    /* Style the link text */
+    .ss a {
+        color: white;
+        /* Set the default text color */
+        text-decoration: none;
+        /* Remove underline from the link text */
+        transition: color 0.3s;
+        /* Add a smooth color transition effect */
+    }
+
+    /* Change the color on hover */
+    .ss a:hover {
+        color: black;
+        /* Set the hover text color */
+    }
+
+    .main-wrapped {
+        margin-left: 160px;
+        background-color: white;
+        position: relative
+    }
+</style>
+
+<body>
+    <div class="screen-overlay"></div>
+    <div style="display: flex;flex-direction: row;
+    justify-content: space-between;">
+        <div>
+            <aside class="navbar-aside" id="ofZfcanvas_aside">
+                <div class="aside-top">
+                    <a href="index.html" class="brand-wrap">
+                        <img src="/assets/imgs/theme/Black White Logo.png" class="logo" alt="Evara Dashboard">
+                    </a>
+                </div>
+                <nav>
+                    <ul class="menu-aside">
+                        <li class="menu-item">
+                            <a class="menu-link" href="index.html"> <i class="icon material-icons md-home"></i>
+                                <span class="text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="menu-item has-submenu ">
+                            <a class="menu-link" href="page-products-list.html"> <i
+                                    class="icon material-icons md-shopping_bag"></i>
+                                <span class="text">Products</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/products" class="ss">Product List</a>
+                                <a href="/admin/addproduct">Add product</a>
+                                <a href="/admin/productOffer">Offers</a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu ">
+                            <a class="menu-link" href="page-orders-1.html"> <i
+                                    class="icon material-icons md-shopping_cart"></i>
+                                <span class="text">Orders</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/orders">Order list </a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu ">
+                            <a class="menu-link" href="page-orders-1.html"> <i
+                                    class="icon material-icons md-shopping_cart"></i>
+                                <span class="text">Coupon</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/couponlist">Create Coupon </a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu">
+                            <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
+                                <span class="text">Banners</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/banners">Banner</a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu">
+                            <a class="menu-link" href="page-form-product-1.html"> <i
+                                    class="icon material-icons md-add_box"></i>
+                                <span class="text">Add Category</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/addcategory">Add category</a>
+                                <a href="/admin/categoryOffer">Offers</a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu">
+                            <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
+                                <span class="text">users</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/users">User list</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="menu-aside">
+                        <li class="menu-item has-submenu">
+                            <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
+                                <span class="text">Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+        </div>
+        <div>

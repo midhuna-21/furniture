@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Shoping Cart</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<link href="uiHome/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="uiHome/css/tiny-slider.css" rel="stylesheet">
+<link href="uiHome/css/style.css" rel="stylesheet">
+<!--===============================================================================================-->
+</head>
+<!-- Start Header/Navigation -->
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+	<div class="container">
+		<a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsFurni">
+			<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+				<li><a class="nav-link" href="/home">Home</a></li>
+				<li><a class="nav-link" href="/products">Shop</a></li>
+				<li><a class="nav-link" href="about.html">About us</a></li>
+				<li><a class="nav-link" href="services.html">Services</a></li>
+				<li><a class="nav-link" href="blog.html">Contact us</a></li>
+				
+			</ul>
+			<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+				<li><a class="nav-link" href="/profile"><img src="uiHome/images/user.svg"></a></li>
+				<li><a class="nav-link" href="/cart"><img src="uiHome/images/cart.svg"></a></li>
+			</ul>
+		</div>
+	</div>		
+</nav>
+
+<!-- Shoping Cart -->
+<% let totalPriceSum = 0 %>
+
+<form class="bg0">
+    <% if (cart.products.length == 0) { %>
+        <div class="container txt-center mt-5 mb-5 p-5">
+            <div class="row">
+                <h3>Your Cart is Empty!</h3>
+                <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                    <div class="m-l-25 m-r--38 m-lr-0-xl">
+    <% } else { %>
+        <div class="wrap-table-shopping-cart">
+			<table class="table table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Product</th>
+						<th scope="col">Product Name</th>
+						<th scope="col">Price</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Total</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% cart.products.forEach(product => { %>
+						<% let totalPrice = product.productDetails.productprice * product.quantity; %>
+						<% totalPriceSum += totalPrice %>
+						<tr class="incrementdecrement" data-id="<%= product.product._id %>">
+							<td class="column-1">
+								<img src="uploadProduct/<%= product.productDetails.image[0] %>" alt="<%= product.productDetails.productname %>" class="product-image">
+							</td>
+							<td class="column-2"><%= product.productDetails.productname %></td>
+							<td class="column-3 price">₹<%= product.productDetails.productprice.toFixed(2) %></td>
+							<td class="column-4">
+								<div class="wrap-num-product flex-w m-l-auto m-r-0">
+									<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+										<i class="fs-16 zmdi zmdi-minus dec-btn" data-id="<%= product.product._id %>"></i>
+									</div>
+									<input class="mtext-104 cl3 txt-center num-product inputQuantity" type="number" name="num-product1" value="<%= product.quantity %>" data-price="<%= product.productDetails.productprice.toFixed(2) %>" data-total="<%= totalPrice.toFixed(2) %>" placeholder="Quantity" title="Quantity">
+									<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+										<i class="fs-16 zmdi zmdi-plus inc-btn" data-id="<%= product.product._id %>"></i>
+									</div>
+								</div>
+							</td>
+							<td class="column-5 total-price">₹<%= totalPrice.toFixed(2) %> </td>
+							<td class="column-6">
+								<div class="flex-w">
+									<button class="btn btn-danger remove-item">
+										<a href="/remove/<%= product.product._id %>" style="text-decoration: none; color: inherit;">Remove</a>
+									</button>
+								</div>
+							</td>
+						</tr>
+					<% }); %>
+				</tbody>
+			</table>
+		</div>
+</div>		
+    </div>
+</div>
+<div class="container">
+		<div class="row">
+		<div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3 ">
+			<div class="border rounded p-4 mb-4">
+				<h4 class="text-center mb-4">Cart Totals</h4>
+
+				<div class="d-flex justify-content-between align-items-center mb-3">
+					<span class="text-secondary">Total:</span>
+					<span class="total-price font-weight-bold total-price-sum"> ₹<%= totalPriceSum.toFixed(2) %> </span>
+
+				</div>
+				
+					<div class="d-flex justify-content-between align-items-center mb-3">
+										<span class="text-secondary">Discount:</span>
+						<span class="font-weight-bold">₹0.0</span>
+					</div>
+		
+				
+						  <!-- Proceed to Checkout Button -->
+						  <div class="text-center">
+							<a href="/checkout" class="btn btn-dark btn-lg btn-block mt-3"
+								style="text-decoration: none;">
+								Proceed to Checkout
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		</div>
+		<% } %>
+		<!-- <div id="proceedToCheckout"></div> -->
+	</form>
+
+
+<script>
+	const countInput = document.querySelectorAll('.incrementdecrement');
+const totalpricesum = document.querySelector('.total-price-sum');
+
+countInput.forEach(product => {
+    const decbtn = product.querySelector(".dec-btn")
+    const incbtn = product.querySelector(".inc-btn")
+    const inputQuantity = product.querySelector(".inputQuantity");
+    const price = product.querySelector(".price")
+    const totalprice = product.querySelector('.total-price')
+    const productId = product.getAttribute("data-id")
+
+	incbtn.addEventListener("click", () => {
+        let qty = parseInt(inputQuantity.value, 10); // Convert to integer
+        const productPrice = parseFloat(price.textContent.replace('₹', '')); // Convert to float
+        if (!isNaN(qty) && !isNaN(productPrice) && qty < 10) { // Check for valid numbers
+            qty++;
+            inputQuantity.value = qty;
+            totalprice.textContent = '₹' + (productPrice * qty).toFixed(2); // Format total price
+            updatetotalpricesum();
+            updatequantity(productId, qty);
+        }
+    })
+
+    decbtn.addEventListener("click", () => {
+        let qty = parseInt(inputQuantity.value, 10); // Convert to integer
+        const productPrice = parseFloat(price.textContent.replace('₹', '')); // Convert to float
+        if (!isNaN(qty) && !isNaN(productPrice) && qty > 1) { // Check for valid numbers
+            qty--;
+            inputQuantity.value = qty;
+            totalprice.textContent = '₹' + (productPrice * qty).toFixed(2); // Format total price
+            updatetotalpricesum();
+            updatequantity(productId, qty);
+        }
+    })
+})
+
+function updatetotalpricesum() {
+    let sum = 0;
+    countInput.forEach(product => {
+        const totalprice = product.querySelector('.total-price');
+        const totalpriceText = totalprice.textContent.trim();
+        const priceValue = parseFloat(totalpriceText.replace('₹', '').trim());
+
+        if (!isNaN(priceValue)) {
+            sum += priceValue;
+        }
+    });
+    totalpricesum.textContent = '₹' + sum.toFixed(2); // Format the sum as currency
+}
+
+
+function updatequantity(productId, quantity) {
+    fetch("/updatedcart", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId, quantity }),
+    })
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error("Network response was not ok")
+        }
+    })
+    .then((data) => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
+
+	
+</script>
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+</html>

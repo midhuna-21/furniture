@@ -1,0 +1,144 @@
+<%- include('../layouts/header.ejs') %>
+<style>
+    /* Style for the content-main section */
+.content-main {
+  /* Set the background image */
+  background-image: url('/images/userRegister.webp');
+
+  /* Adjust background properties as needed */
+  background-size: cover; /* Cover the entire section */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  max-width: 100%;
+  max-height: 100%;
+  /* Add additional styling */
+  padding-top: 150px;    /* Increase the top padding */
+  padding-bottom: 100px; /* Increase the bottom padding */
+  padding-left: 20px;   /* Optional: Adjust left padding if needed */
+  padding-right: 20px;  
+}
+*{
+    margin: 0;
+    
+}
+.card-login {
+    opacity: 10 ; /* Adjust the value between 0 (completely transparent) and 1 (fully opaque) as needed */
+}
+
+
+</style>
+              
+        <section class="content-main">
+            <div class="card mx-auto card-login " style= "background-color: rgba(255, 255, 255, 0.6);">
+                <form action="/register" name="register"  onsubmit="return validateform()" method="post">
+                  
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Sign up</h4>
+                    
+                        <div class="mb-3">
+                            <input class="form-control" name="name" placeholder="Username " type="text" autocomplete="off">
+                            <p id="nameError" class="error-message"></p>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" name="email" placeholder="Useremail" type="text">
+                            <p id="emailError" class="error-message "><%= messages.email %></p>
+                           
+                        </div> <!-- form-group// -->
+                        
+                            <div class="mb-3">
+                                <input class="form-control" name="tel" placeholder="User phoneno" type="text">
+                                <p id="phonenoError" class="error-message "><%= messages.tel %></p>
+                                
+                            </div>
+                            <div class="mb-3">
+                            <input class="form-control" name="password"placeholder="Password" type="password" autocomplete="new-password" >
+                            <p id="passwordError" class="error-message"></p>
+                        </div> <!-- form-group// -->
+                        <div class="mb-3">
+                            <!-- <a href="#" class="float-end font-sm text-muted">Forgot password?</a> -->
+                            <label class="form-check">
+                                <!-- <input type="checkbox" class="form-check-input" checked=""> -->
+                                <!-- <span class="form-check-label">Remember</span> -->
+                            </label>
+                        </div> <!-- form-group form-check .// -->
+                       
+                        
+                        <div class="mb-4">
+                            <button type="submit" class="btn btn-dark w-100" style="background-color:  grey"> Sign up </button>
+                        </div> <!-- form-group// -->
+                        <p class="text-center mb-4" style="color: black;  ">Already have an account? <a href="/userlogin"style="color: blue">Login</a></p>
+
+                </div>
+                
+                </form>
+            </div>
+        </section>
+     
+
+<script>
+  
+    function validateform() {
+        var nameInput = document.getElementsByName("name")[0];
+        var emailInput = document.getElementsByName("email")[0];
+        var phonenoInput = document.getElementsByName("tel")[0];
+        var passwordInput = document.getElementsByName("password")[0];
+
+        var name = nameInput.value;
+        var email = emailInput.value;
+        var phoneno = phonenoInput.value;
+        var password = passwordInput.value;
+
+        var isValid = true;
+
+        // Reset error messages
+        document.getElementById("nameError").textContent = "";
+        document.getElementById("emailError").textContent = "";
+        document.getElementById("phonenoError").textContent = "";
+        document.getElementById("passwordError").textContent = "";
+
+        // Validate name
+        if (name.trim() === "") {
+            document.getElementById("nameError").textContent = "Please enter your name.";
+            isValid = false;
+        }
+
+        if (email.trim() === "") {
+            document.getElementById("emailError").textContent = "Please enter email.";
+            isValid = false;
+        }
+        if (phoneno.trim() === "" || phoneno.length < 10) {
+            document.getElementById("phonenoError").textContent = "Please enter a valid phone number.";
+            isValid = false;
+        }
+        if (password.trim() === "") {
+            document.getElementById("passwordError").textContent = "Please enter password.";
+            isValid = false;
+        }
+
+        // Validate email
+        var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById("emailError").textContent = "Please enter a valid email address.";
+            isValid = false;
+        }
+
+        // Validate password
+        if (password.length < 4) {
+            document.getElementById("passwordError").textContent = "Password must be at least 4 characters.";
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
+
+
+
+
+
+ <%- include('../layouts/footer.ejs') %>
+
+
+
+
+    

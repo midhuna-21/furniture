@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Shoping Cart</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<link href="uiHome/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="uiHome/css/tiny-slider.css" rel="stylesheet">
+<link href="uiHome/css/style.css" rel="stylesheet">
+</head>
+<style>
+	
+    /* Style for the container */
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* Style for the address input container */
+    .address-input-container {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    /* Style for the radio button */
+    input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    /* Style for the "Add an address" link */
+    a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    /* Hover effect for the link */
+    a:hover {
+        text-decoration: underline;
+    }
+	/* Style for the address input container */
+.address-input-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+/* Style for the selected address */
+.address-input-container.selected {
+    background-color: #2f3d4e;
+    color: #fff;
+    border-color:#2f3d4e;
+}
+/* Style for the "Your Order" section */
+.order-details {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Style for the payment method section */
+.payment-method {
+    margin-top: 10px;
+}
+
+.payment-method h4 {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Style for the apply coupon section */
+.apply-coupon {
+    margin-top: 10px;
+}
+
+.apply-coupon .input-group {
+    margin-bottom: 5px;
+}
+
+/* Style for the Place Order button */
+.place-order {
+    margin-top: 10px;
+}
+.address-section {
+    margin-bottom: 30px; /* Adjust as needed */
+}
+
+
+    .selected-address {
+        background-color: #f0f0f0; /* Change the background color to highlight the selected address */
+    }
+
+</style>
+
+
+
+<body>
+	<!-- Start Header/Navigation -->
+	<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarsFurni">
+				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+					<li><a class="nav-link" href="/home">Home</a></li>
+					<li><a class="nav-link" href="/products">Shop</a></li>
+					<li><a class="nav-link" href="about.html">About us</a></li>
+					<li><a class="nav-link" href="services.html">Services</a></li>
+					<li><a class="nav-link" href="blog.html">Contact us</a></li>
+					
+				</ul>
+				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+					<li><a class="nav-link" href="/profile"><img src="uiHome/images/user.svg"></a></li>
+					<li><a class="nav-link" href="/cart"><img src="uiHome/images/cart.svg"></a></li>
+				</ul>
+			</div>
+		</div>		
+	</nav>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->		
+			<div class="logo-mobile">
+				<a href="index.html"><img src="/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+			</div>
+
+			<!-- Icon header -->
+			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+					<i class="zmdi zmdi-search"></i>
+				</div>
+
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+					<a href ="/cart"><i class="zmdi zmdi-shopping-cart"></a></i>
+				</div>
+
+				<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
+					<i class="zmdi zmdi-favorite-outline"></i>
+				</a>
+			</div>
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+			<div class="container-search-header">
+				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+					<img src="/images/icons/icon-close2.png" alt="CLOSE">
+				</button>
+
+				<form class="wrap-search-header flex-w p-l-15">
+					<button class="flex-c-m trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+					<input class="plh3" type="text" name="search" placeholder="Search...">
+				</form>
+			</div>
+		</div>
+	</header>
+
+
+	<!-- breadcrumb -->
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<!-- <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+				Home
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<span class="stext-109 cl4">
+				Shoping Cart -->
+			<!-- </span> -->
+        
+		</div>
+	</div>
+
+    <!-- checkout -->
+	<div class="page-content">
+		<div class="checkout">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="address-section">
+						<!-- Address Selection -->
+<h3>Select Address:</h3>
+<div >
+	<% if (user.address && user.address.length > 0) { %>
+
+		<% user.address.forEach(address => { %>
+			<div class="address-input-container border">
+				<input  form="paymentForm" type="radio" value="<%= address._id %>" name="addressId"id="addressId">
+			<%= address.name %>
+			<%= address.address %>
+			<%= address.city %>, <%= address.state %> - <%= address.pincode %>
+			Phone: <%= address.tel %>
+			</div>
+			
+		<% }); %>
+	<% } else { %>
+		No addresses found
+		
+	<% } %>
+	
+</div>
+
+						<a href="/address"class="btn btn-outline-primary-2">Add an address</a>
+					</div>
+					</div><!-- End .col-lg-9 -->
+				</div><!-- End .row -->
+	
+
+					
+	<aside class="col">
+		<div class="summary">
+			<h3 class="summary-title">Order Summary</h3><!-- End .summary-title -->
+	
+			<div class="order-details">
+				<table class="table table-summary">
+					<tbody>
+						<tr>
+							<td>Shipping:</td>
+							<td>Free shipping</td>
+						</tr>
+						<tr>
+							<td>Discount:</td>
+							<!-- Check if a coupon code exists -->
+							<% if (coupon && coupon.discountAmount !== undefined) { %>
+								<!-- Subtract the discount amount from the total -->
+								<td><%= coupon.discountAmount %></td>
+							<% } else { %>
+								<td>0.0</td>
+							<% } %>
+						</tr>
+						<tr>
+							<td>Wallet Balance:</td>
+							<td id="walletBalance">₹<%= wallet.balance %></td>
+						</tr>
+						<tr>
+							<td>Total:</td>
+							<td id="totalAmount">₹<%= calculateTotalPrice %></td>
+						</tr>
+					</tbody>
+				</table><!-- End .table table-summary -->
+	
+				<div class="apply-coupon">
+					<!-- Apply Coupon Section (conditionally rendered) -->
+					<% if (coupon) { %>
+						<div class="input-group">
+							<input form="paymentForm" type="text" id="couponCode" class="form-control" placeholder="Coupon Code" value="<%= coupon.code %>">
+							<div class="input-group-append">
+								<a href="/coupons" class="btn btn-outline-primary-2">Apply</a>
+							</div>
+						</div>
+					<% } else { %>
+						<!-- Render the coupon code input without a value -->
+						<div class="input-group">
+							<input form="paymentForm" type="text" id="couponCode" class="form-control" placeholder="Coupon Code">
+							<div class="input-group-append">
+								<a href="/coupons" class="btn btn-outline-primary-2">Apply</a>
+							</div>
+						</div>
+					<% } %>
+				</div><!-- End .apply-coupon -->
+	
+				<div class="payment-method">
+					<h4>Payment Method</h4>
+					<div class="form-group form-check">
+						<input form="paymentForm" type="radio" name="paymentMethod" id="f-option4" value="wallet">
+						<label class="form-check-label"form="paymentForm" for="payWithWallet">Wallet Only</label>
+					</div>
+					<div class="form-group form-check">
+						<input form="paymentForm" type="radio" name="paymentMethod" id="f-option5" value="cod">
+						<label class="form-check-label" for="cashOnDelivery">Cash on Delivery</label>
+					</div>
+					<div class="form-group form-check">
+						<input form="paymentForm" type="radio" name="paymentMethod" id="f-option6" value="online">
+						<label class="form-check-label" for="upiPayment">Online Payment</label>
+					</div>
+				</div><!-- End .payment-method -->
+	
+				<button class="btn btn-outline-primary-2 place-order" onclick="makePurchase('<%= calculateTotalPrice %>')">
+					<a><span class="btn-text">Place Order</span></a>
+				</button>
+			</div><!-- End .order-details -->
+		</div><!-- End .summary -->
+	</aside><!-- End .col -->
+</div><!-- End .container -->
+</div><!-- End .checkout -->
+</div><!-- End .page-content -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!--  -->
+<script>
+	// Get all radio buttons for address selection
+const addressRadios = document.querySelectorAll('input[name="address"]');
+
+// Add a click event listener to each radio button
+addressRadios.forEach((radio) => {
+    radio.addEventListener('click', function () {
+        const selectedAddress = this.value;
+        console.log(`Selected Address ID: ${selectedAddress}`);
+    });
+});
+
+</script>
+<script>
+
+	function makePurchase(GrandTotal) { 
+	
+    let addressId = $("input[name='addressId']:checked").val();
+	const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+	if (!addressId || !selectedPaymentMethod) {
+        alert("Please select both an address and a payment method before placing your order.");
+        return; // Prevent further processing
+    }
+	    let walletbutton = document.getElementById("f-option4")
+		 let codbutton=document.getElementById("f-option5")
+		 let onlinebutton=document.getElementById("f-option6")
+		
+			  let payment
+			  if(walletbutton.checked){
+				payment=walletbutton.value
+			  }
+			  else if(codbutton.checked){
+				payment=codbutton.value
+			  }else if(onlinebutton.checked){
+				payment=onlinebutton.value
+			  }
+			  
+	$.ajax({
+		url: '/checkout',
+		method: 'POST',
+		data: {
+			addressId: addressId,
+			paymentMethod: payment,
+			GrandTotal: GrandTotal
+
+		},
+		 success:(response) => {
+			console.log('Received response:', response);
+			
+			
+			if (response.method === 'wallet') {
+				showWalletSuccessMessage();
+				}else	if (response.method == 'cod') {
+				console.log('cashon deli')
+				Swal.fire({
+					title: "Order success",
+					text: "order placed successfully",
+					icon: "success",
+					showCancelButton: true,
+					confirmButtonText: "view orders",
+					cancelButtonText: "continue shopping",
+					reverseButtons: true
+				}).then(function (result) {
+					if (result.value) {
+						location.href = '/home'
+						// result.dismiss can be "cancel", "overlay",
+						// "close", and "timer"
+					} else if (result.dismiss === "cancel") {
+						location.href = '/checkout'
+					}
+				});
+
+			}else if(response.method === 'online'){
+			console.log('generaterOrder',response.generateOrder)
+				const options = {
+						"key": "rzp_test_XLuQj8MFj0FaxS", // Enter the Key ID generated from the Dashboard
+						"amount": response.generateOrder.amount_due, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+						"currency": "INR",
+						"name": "Future Furniture", //your business name
+						"description": "Test Transaction",
+						"image": "https://example.com/your_logo",
+						"order_id":response.generateOrder.id , //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+						"handler": function (status){
+						  
+							verifyPayment(response,status)
+						},
+						"prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+							"name": "Gaurav Kumar", //your customer's name
+							"email": "gaurav.kumar@example.com", 
+							"contact": "9000090000"  //Provide the customer's phone number for better conversion rates 
+						},
+						"notes": {
+							"address": "Razorpay Corporate Office"
+						},
+						"theme": {
+							"color": "#3399cc"
+						}
+					};
+					
+					var rzp1 = new Razorpay(options);
+					rzp1.open();
+
+
+			}else {
+				Swal.fire({
+					title: 'Error Occured',
+					text: "Can't process order error occured",
+					icon: 'fail',
+					timer: 5000
+				})
+
+			}
+		},
+		error:(err)=>{
+			alert(err)
+		}
+	})
+}
+
+function verifyPayment(order,payment){
+	console.log('verify payemennn')
+	$.ajax({
+		url:'/verifyPayment',
+		method:'POST',
+		data:{
+			order,
+			payment
+		},
+		success:(response)=>{
+			if(response.status){                        
+				location.href='/orderlist'
+			} else{
+				alert("Payment failed!" + response.errMsg)
+			}
+		}
+	})
+}
+function showWalletSuccessMessage() {
+    Swal.fire({
+        icon: 'success',
+        title: 'Wallet Payment Successful!',
+        text: 'Your order was placed successfully using your wallet balance.',
+        showCancelButton: true,
+        cancelButtonText: 'Continue Shopping',
+        confirmButtonText: 'View Orders',
+        cancelButtonColor: '#d33',
+        confirmButtonColor: 'btn-success',
+        heightAuto: false,
+    }).then((result) => {
+        if (result.value) {
+            // Redirect to order details page
+            location.href = '/orderDetails?id=' + response.generateOrder.id;
+        } else if (result.dismiss === 'cancel') {
+            // Redirect to product list page
+            location.href = '/productList';
+        }
+    });
+}
+
+
+</script>
+
+
+	
+<!--===============================================================================================-->	
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+</html>

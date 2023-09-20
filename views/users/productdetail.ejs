@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Product Detail</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<link href="uiHome/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="uiHome/css/tiny-slider.css" rel="stylesheet">
+<link href="uiHome/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Start Header/Navigation -->
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+	<div class="container">
+		<a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsFurni">
+			<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+				<li><a class="nav-link" href="/home">Home</a></li>
+				<li><a class="nav-link" href="/products">Shop</a></li>
+				<li><a class="nav-link" href="about.html">About us</a></li>
+				<li><a class="nav-link" href="services.html">Services</a></li>
+				<li><a class="nav-link" href="blog.html">Contact us</a></li>
+				
+			</ul>
+			<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+				<li><a class="nav-link" href="/profile"><img src="uiHome/images/user.svg"></a></li>
+				<li><a class="nav-link" href="/cart"><img src="uiHome/images/cart.svg"></a></li>
+			</ul>
+		</div>
+	</div>		
+</nav>
+
+
+
+	<!-- breadcrumb -->
+	<div class="container">
+		<% products.forEach(product =>{ %>
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+				Shop
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<a href="product.html" class="stext-109 cl8 hov-cl1 trans-04">
+				<%= product.productname %>
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<!-- <span class="stext-109 cl4">
+				 Lightweight Jacket -->
+			<!-- </span>  -->
+		</div>
+	</div>
+		
+
+	<!-- Product Detail -->
+	<section class="sec-product-detail bg0 p-t-65 p-b-60">
+		<div class="container"> 
+			<div class="row">
+				
+				<div class="col-md-6 col-lg-7 p-b-30">
+					<div class="p-l-25 p-r-30 p-lr-0-lg">
+						<div class="wrap-slick3 flex-sb flex-w">
+							<div class="slick3 gallery-lb">
+								<% products.forEach(image =>{ %>
+								<div class="item-slick3" data-thumb="uploadProduct/<%= product.image[0] %>">
+									<div class="wrap-pic-w pos-relative">
+										<img src="uploadProduct/<%= product.image[0] %>" alt="IMG-PRODUCT">
+
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="uploadProduct/<%= product.image[0] %>">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
+								</div>
+								<div class="item-slick3" data-thumb="uploadProduct/<%= product.image[1] %>">
+									<div class="wrap-pic-w pos-relative">
+										<img src="uploadProduct/<%= product.image[1] %> "alt="IMG-PRODUCT">
+
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="uploadProduct/<%= product.image[1] %>">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
+								</div>
+
+								<div class="item-slick3" data-thumb="uploadProduct/<%= product.image[2] %>">
+									<div class="wrap-pic-w pos-relative">
+										<img src="uploadProduct/<%= product.image[2] %>" alt="IMG-PRODUCT">
+
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="uploadProduct/<%= product.image[2] %>">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+				     <% }); %>
+						</div>
+					</div>
+				</div>
+				
+						
+				<div class="col-md-6 col-lg-5 p-b-30">
+					<div class="p-r-50 p-t-5 p-lr-0-lg">
+						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+							<%= product.productname %>
+						</h4>
+
+						<span class="mtext-106 cl2">
+							<%= product.productprice %>
+						</span>
+
+						<p class="stext-102 cl3 p-t-23">
+							<%= product.description %>
+						</p>
+						
+						<!--  -->
+						<div class="p-t-33">
+							<div class="flex-w flex-r-m p-b-10">
+								
+							</div>
+
+							<div class="flex-w flex-r-m p-b-10">
+								<div class="size-203 flex-c-m respon6">
+									Color
+								</div>
+
+								<div class="size-204 respon6-next">
+									<div class="rs1-select2 bor8 bg0">
+										<select class="js-select2" name="time">
+											<option>Choose an option</option>
+											<% products.forEach(product => { %>
+												<option><%= product.color %></option>
+											<% }); %>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="flex-w flex-r-m p-b-10">
+								<div class="size-204 flex-w flex-m respon6-next">
+									<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+											<i class="fs-16 zmdi zmdi-minus"id="dec-btn"></i>
+										</div>
+
+										<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" id="Quantity" value="1" min="1">
+
+
+										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" id="inc-btn">
+											<i class="fs-16 zmdi zmdi-plus"></i>
+										</div>
+									</div>
+									<% if (product.quantity <= 0) { %>
+										<span class="out-of-stock alert-danger">Out of Stock</span>
+									<% } else { %>
+									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 " id="addtocart" data-productid="<%= product._id %>">
+										Add to cart
+									</button>
+									<% } %>
+								</div>
+							</div>	
+						</div>	
+					</div>
+				</div>
+			</div>
+			<% }); %>
+		</div>
+	</section>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			// Get the button element by its ID
+			const addToCartButton = document.getElementById("addtocart");
+	
+			// Add a click event listener to the button
+			addToCartButton.addEventListener("click", function () {
+				// Display a SweetAlert confirmation dialog
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: 'Added to cart successfully',
+					showConfirmButton: false,
+					timer: 1500
+				});
+			});
+		});
+	</script>
+
+	<script>
+		
+		const count = document.getElementById("Quantity")
+		const decBtn = document.getElementById("dec-btn")
+		const incBtn = document.getElementById("inc-btn")
+		incBtn.addEventListener("click", () =>{
+		    const value = Number(count.value)
+			if(value< 10)
+			 count.value = value + 1
+			else showToast("Maximum 10 quantities are allowed")
+		})
+		decBtn.addEventListener("click", () =>{
+			const value = Number(count.value)
+			if(value > 1)
+			count.value = count.value - 1
+		})
+		const cartButton = document.getElementById("addtocart");
+       console.log("Script loaded"); // Add this line
+       cartButton.addEventListener("click", function (e) {
+       const productId = cartButton.getAttribute("data-productid");
+       console.log("clicked");
+    fetch("/add-item-to-cart", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId, quantity: count.value }),
+    })
+
+	.then((response) => {
+		if (response.ok) {
+			return response.json();
+		}else{
+			throw new Error("Network response was not ok")
+		}
+	})
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) =>{
+
+		 console.log(error);
+		})
+});
+function showToast(message) {
+    // Implementation to show a toast message
+    console.log(message); // Replace with actual toast implementation
+}
+
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const cartButton = document.getElementById('addtocart'); // Select the button by its ID
+			cartButton.addEventListener('click', function(event) {
+				event.preventDefault();
+				console.log('Button clicked');
+				window.location.href = '/cart'; // Redirect to the cart page
+			});
+		});
+	</script>
+		
+							
+
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/slick/slick.min.js"></script>
+	<script src="js/slick-custom.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/parallax100/parallax100.js"></script>
+	<script>
+        $('.parallax100').parallax100();
+	</script>
+<!--===============================================================================================-->
+	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+		        delegate: 'a', // the selector for gallery item
+		        type: 'image',
+		        gallery: {
+		        	enabled:true
+		        },
+		        mainClass: 'mfp-fade'
+		    });
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/sweetalert/sweetalert.min.js"></script>
+	<script>
+		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function(){
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+		$('.js-addwish-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-detail');
+				$(this).off('click');
+			});
+		});
+
+		/*---------------------------------------------*/
+
+		// $('.js-addcart-detail').each(function(event){
+		// 	var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+		// 	$(this).on('click', function(){
+		// 		swal(nameProduct, "is added to cart !", "success");
+		// 	});
+		// });
+	
+	</script>
+<!--===============================================================================================-->
+	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+</html>

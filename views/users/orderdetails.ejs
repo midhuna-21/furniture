@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Evara Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+   
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <!--===============================================================================================-->
+        <link href="/uiHome/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link href="/uiHome/css/tiny-slider.css" rel="stylesheet">
+		<link href="/uiHome/css/style.css" rel="stylesheet">
+<!--===============================================================================================-->
+    
+
+</head>
+
+<body>
+   <!-- Start Header/Navigation -->
+	<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarsFurni">
+				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+					<li><a class="nav-link" href="/home">Home</a></li>
+					<li><a class="nav-link" href="/products">Shop</a></li>
+					<li><a class="nav-link" href="">About us</a></li>
+					<li><a class="nav-link" href="">Services</a></li>
+					<li><a class="nav-link" href="">Contact us</a></li>
+					
+				</ul>
+				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+					<li><a class="nav-link" href="/profile"><img src="/uiHome/images/user.svg"></a></li>
+					<li><a class="nav-link" href="/cart"><img src="/uiHome/images/cart.svg"></a></li>
+				</ul>
+			</div>
+		</div>		
+	</nav>
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Order Detail</h2>
+                <p>Details for Order ID: <%= order._id %></p>
+            </div>
+        </div>
+        <div class="card">
+            <header class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-3">
+                        <span>
+                            <i class="material-icons md-calendar_today"></i>
+                        </span>
+                        <br>
+                        <small class="text-muted">Order Date: <%= order.orderDate.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) %></small>
+                    </div>
+                    <div class="col-lg-6 col-md-6 ms-auto text-md-end">
+                        <!-- Add any action buttons or icons here -->
+                    </div>
+                </div>
+            </header> <!-- card-header end// -->
+            <div class="card-body">
+                <div class="row mb-5 mt-3 order-info-wrap">
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-person"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1"><%= order.user.name %></h6>
+                                <p class="mb-1"><%= order.user.tel %></p>
+                            </div>
+                        </article>
+                    </div> <!-- col// -->
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-local_shipping"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1">Order Info</h6>
+                                <p class="mb-1">Shipping: Fargo Express <br> Payment Method: <%= order.paymentMethod %> <br> Status: <%= order.orderStatus %></p>
+                            </div>
+                        </article>
+                    </div> <!-- col// -->
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-place"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1">Deliver To</h6>
+                                <p class="mb-1">City: <%= order.user.address[0].city %> <br> <%= order.user.address[0].address %>  <br> <%= order.user.address[0].state %>, <%= order.user.address[0].pincode %></p>
+                            </div>
+                        </article>
+                        <article class="icontext align-items-start">
+                            <a href="/invoice?orderId=<%= order._id %>" class="btn btn-success">Invoice</a>
+
+                    </article>
+                    </div> <!-- col// -->
+                </div> <!-- row // -->
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="20%">Product</th>
+                                        <th width="20%">Product Name</th>
+                                        <th width="20%">Product Price</th>
+                                        <th width="20%">Quantity</th>
+                                     
+                                        <th width="20%">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% order.products.forEach(function(item) { %>
+                                        <tr>
+                                            <td>
+                                                <a class="itemside d-flex" href="#">
+                                                    <div class="left">
+                                                        <img src="/uploadProduct/<%= item.productId.image[0] %>" width="40" height="40" class="img-xs" alt="Item">
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td><%= item.productId.productname %></td>
+                                            <td><%= item.productId.productprice %></td>
+                                            <td><%= item.productId.quantity %></td>
+                                            <td><%= order.orderStatus %></td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div> <!-- table-responsive// -->
+                    </div> <!-- col-lg-7 // -->
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-4">
+                        <div class="box shadow-sm bg-light">
+                            <h6 class="mb-3">Order Summary</h6>
+                           
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <td colspan="4">
+                                    <article>
+                                        <dl class="dlist d-flex">
+                                            <dt>Subtotal:</dt>
+                                            <dd>₹<%= order.totalprice %></dd>
+                                        </dl>
+                                        <dl class="dlist d-flex">
+                                            <dt>Discount:</dt>
+                                            <dd>₹0.0</dd>
+                                        </dl>
+                                        <dl class="dlist d-flex">
+                                            <dt>Grand Total:</dt>
+                                            <dd><b class="h5">₹<%= order.totalprice %></b></dd>
+                                        </dl>
+                                    </article>
+                                    <div class="text-center mt-4">
+                                        <% if (order.orderStatus  !== 'Cancelled' && order.orderStatus !== 'Delivered') { %>
+                                            <button class="btn btn-success" onclick="cancelOrder('<%= order._id %>')">Cancel Order</button>
+                                        <% } %>
+                                    </div>
+                                    <div class="text-center mt-4">
+                                    <% if (order.orderStatus  !== 'Cancelled' && order.orderStatus !== 'Delivered') { %>
+                                   
+                                        <button class="btn btn-success" onclick="returnOrder('<%= order._id %>')">Return</button>
+                                        <% } %>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    </div> <!-- col-lg-4 // -->
+                </div> <!-- row // -->
+                
+                
+                
+            </div> <!-- card-body end// -->
+        </div> <!-- card end// -->
+    </section> <!-- content-main end// -->
+    
+        <footer class="main-footer font-xs">
+            <!-- <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                    document.write(new Date().getFullYear())
+                    </script> ©, Evara - HTML Ecommerce Template .
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div> -->
+			<footer class="main-footer font-xs">
+				
+			</footer>
+		</main>
+   
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+<script>
+
+
+            function returnOrder(orderId) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Return Order',
+                    text: 'Are you sure you want to return this order?',
+                    showCancelButton: true,
+                    cancelButtonText: "No, keep the order",
+                    confirmButtonText: 'Yes, cancel it',
+                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#6fd542',
+                    heightAuto: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+                        $.ajax({
+                            url: '/orderreturn', 
+                            method: 'POST',
+                            data: JSON.stringify({ orderId: orderId }), 
+                            contentType: 'application/json',
+                            success: function(response) {
+                                if (response.success) {
+                                resolve();
+                            } else {
+                                // Handle the error case here if needed.
+                                console.log('Error: An error occurred while cancelling the order.');
+                                resolve();
+                            }
+                        },
+                        error: function () {
+                            // Handle the AJAX error here if needed.
+                            console.log('Error: An error occurred while making the AJAX request.');
+                            resolve();
+                        }
+   
+
+                          
+                        });
+                    }
+                });
+            }
+        </script>
+
+
+        <script>
+            function cancelOrder(orderId) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Cancel Order',
+                    text: 'Are you sure you want to cancel this order?',
+                    showCancelButton: true,
+                    cancelButtonText: "No, keep the order",
+                    confirmButtonText: 'Yes, cancel it',
+                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#6fd542',
+                    heightAuto: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+                        $.ajax({
+                            url: '/ordercancel', 
+                            method: 'POST',
+                            data: JSON.stringify({ orderId: orderId }), 
+                            contentType: 'application/json',
+                            success: function(response) {
+                                if (response.success) {
+                                resolve();
+                            } else {
+                                // Handle the error case here if needed.
+                                console.log('Error: An error occurred while cancelling the order.');
+                                resolve();
+                            }
+                        },
+                        error: function () {
+                            // Handle the AJAX error here if needed.
+                            console.log('Error: An error occurred while making the AJAX request.');
+                            resolve();
+                        }
+   
+
+                          
+                        });
+                    }
+                });
+            }
+        </script>
+        
+        
+        
+        
+        
+		<script src="/assets/js/vendors/jquery-3.6.0.min.js"></script>
+		<script src="/assets/js/vendors/bootstrap.bundle.min.js"></script>
+		<script src="/assets/js/vendors/select2.min.js"></script>
+		<script src="/assets/js/vendors/perfect-scrollbar.js"></script>
+		<script src="/assets/js/vendors/jquery.fullscreen.min.js"></script>
+		<!-- Main Script -->
+		<script src="/assets/js/main.js" type="text/javascript"></script>
+	</body>
+	
+	
+	<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+	</html>

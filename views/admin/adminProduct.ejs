@@ -1,0 +1,483 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Furniture site</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="icon" href="/assets/imgs/theme/Black White Logo.png">
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<style>
+    .logo {
+        width: 10px;
+        /* Set the desired width for the image */
+        height: auto;
+        /* Automatically adjust the height to maintain aspect ratio */
+    }
+
+    .aside-top {
+        background-color: black;
+        /* You can also add other styles if needed */
+        /* color: white; */
+        /* This will change the text color to white on a black background */
+    }
+
+    /* Style the entire aside element */
+    .navbar-aside {
+        background-color: black;
+        color: white;
+        /* Set the text color to white */
+        width: 240px;
+        /* Set the width of the aside element */
+        padding: 20px;
+        /* Add padding to the aside element */
+    }
+
+    /* Style the logo */
+    .navbar-aside .logo {
+        display: block;
+        margin: 0 auto;
+        max-width: 80%;
+        /* Adjust the logo's max-width as needed */
+    }
+
+    /* Style the menu items and links */
+    .menu-aside {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu-item {
+        margin-bottom: 10px;
+        /* Add spacing between menu items */
+    }
+
+    .menu-link {
+        display: block;
+        padding: 10px;
+        color: white;
+        /* Set the text color for menu links */
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        /* Add a smooth background color transition */
+    }
+
+    .menu-link:hover {
+        /* Change the background color on hover */
+        color: black;
+        /* Set the text color for menu links on hover */
+    }
+
+    /* Style the submenu items */
+    .submenu {
+        display: none;
+    }
+
+    .menu-item.active .submenu {
+        display: block;
+    }
+
+    .submenu a {
+        color: white;
+        /* Set the text color for submenu links */
+        text-decoration: none;
+    }
+
+    .submenu a:hover {
+        text-decoration: underline;
+        /* Underline submenu links on hover */
+    }
+
+    .menu-link .text {
+        color: white
+            /* Replace 'YourColorHere' with the desired color value */
+    }
+
+    .menu-link:hover .text {
+        color: black;
+        /* Replace with the hover color */
+    }
+
+    /* Style the submenu links */
+    .submenu a {
+        color: white;
+        /* Replace with the default color */
+        text-decoration: none;
+        /* Remove underline from links */
+        /* Add a smooth color transition effect */
+    }
+
+    /* Change the color on hover for submenu links */
+    .submenu a:hover {
+        color: black;
+        /* Replace with the hover color */
+    }
+
+    /* Style the link text */
+    .ss a {
+        color: white;
+        /* Set the default text color */
+        text-decoration: none;
+        /* Remove underline from the link text */
+        transition: color 0.3s;
+        /* Add a smooth color transition effect */
+    }
+
+    /* Change the color on hover */
+    .ss a:hover {
+        color: black;
+        /* Set the hover text color */
+    }
+
+    .main-wrapped {
+        margin-left: 160px;
+        background-color: white;
+        position: relative
+    }
+</style>
+
+<body>
+    <div class="screen-overlay"></div>
+    <div style="display: flex;flex-direction: row;
+    justify-content: space-between;">
+        <div>
+            <aside class="navbar-aside" id="ofZfcanvas_aside">
+                <div class="aside-top">
+                    <a href="index.html" class="brand-wrap">
+                        <img src="/assets/imgs/theme/Black White Logo.png" class="logo" alt="Evara Dashboard">
+                    </a>
+                </div>
+                <nav>
+                    <ul class="menu-aside">
+                        <li class="menu-item">
+                            <a class="menu-link" href="index.html"> <i class="icon material-icons md-home"></i>
+                                <span class="text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="menu-item has-submenu ">
+                            <a class="menu-link" href="page-products-list.html"> <i
+                                    class="icon material-icons md-shopping_bag"></i>
+                                <span class="text">Products</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/products" class="ss">Product List</a>
+                                <a href="/admin/addproduct">Add product</a>
+                                <a href="/admin/productOffer">Offers</a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu ">
+                            <a class="menu-link" href="page-orders-1.html"> <i
+                                    class="icon material-icons md-shopping_cart"></i>
+                                <span class="text">Orders</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/orders">Order list </a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu ">
+                            <a class="menu-link" href="page-orders-1.html"> <i
+                                    class="icon material-icons md-shopping_cart"></i>
+                                <span class="text">Coupon</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/couponlist">Create Coupon </a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu">
+                            <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
+                                <span class="text">Banners</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/banners">Banner</a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu">
+                            <a class="menu-link" href="page-form-product-1.html"> <i
+                                    class="icon material-icons md-add_box"></i>
+                                <span class="text">Add Category</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/addcategory">Add category</a>
+                                <a href="/admin/categoryOffer">Offers</a>
+                            </div>
+                        </li>
+                        <li class="menu-item has-submenu">
+                            <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
+                                <span class="text">users</span>
+                            </a>
+                            <div class="submenu">
+                                <a href="/admin/users">User list</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="menu-aside">
+                        <li class="menu-item has-submenu">
+                            <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
+                                <span class="text">Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+        </div>
+        <div>
+            <main class="main-wrap">
+                <section class="content-main">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="content-header">
+                                  <form action="/admin/addproduct" method="post" enctype="multipart/form-data" id="product-form" onsubmit="return validateForm(event)">
+                                <h2 class="content-title">Add New Product</h2>
+                                <div>
+                                    <button form="product-form"
+                                        class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to
+                                        draft</button>
+                                    <button form="product-form" class="btn btn-md rounded font-sm hover-up"
+                                        type="submit">Publish</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h4>Basic</h4>
+                                </div>
+                                <div class="card-body">
+                                  
+
+                                        <div class="mb-4">
+                                            <label for="product_name" class="form-label">Product Name</label>
+                                            <input type="text" name="productname" class="form-control"
+                                                id="product_name">
+                                            <p class="error-message" id="productnameError"></p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Description</label>
+                                            <textarea name="description" class="form-control" rows="4"></textarea>
+                                            <p class="error-message" id="descriptionError"></p>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="mb-4">
+                                                    <label class="form-label">Regular price</label>
+                                                    <div class="row gx-2">
+                                                        <input placeholder="$" name="productprice" type="text"
+                                                            class="form-control">
+                                                            <p class="error-message" id="promotionalPriceError"></p>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="mb-4">
+                                                    <label class="form-label">Promotional price</label>
+                                                    <input placeholder="$" name="salesprice" type="text"
+                                                        class="form-control">
+                                                        <p class="error-message" id="salesPriceError"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+
+                                            </div>
+                                        </div>
+                                </div>
+                            </div> <!-- card end// -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-4">
+                                                    <label for="product_name" class="form-label">Quantity</label>
+                                                    <input type="text" placeholder="" name="quantity"
+                                                        class="form-control" id="product_name">
+                                                    <p id="quantityError" class="error-message"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-4">
+                                                    <label for="product_name" class="form-label">Color</label>
+                                                    <input type="text" name="color" class="form-control"
+                                                        id="product_name">
+                                                    <p id="colorError" class="error-message"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+
+                                        </div>
+
+                                </div>
+                            </div> <!-- card end// -->
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h4>Media</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="input-upload">
+                                        <label class="form-label">Image</label>
+                                        <input type="file" name="file" class="form-control" id="product_image"
+                                            accept="image/*" multiple />
+                                        <p id="imageError" class="error-message"></p>
+                                    </div>
+                                </div>
+                            </div> <!-- card end// -->
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h4>Organization</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row gx-2">
+                                        <div class="col-sm-6 mb-3">
+                                            <label class="form-label">Category</label>
+                                            <select name="categoryname" class="form-control" id="product_name">
+                                                <option value="" selected disabled>Select a category</option>
+                                                <% categories.forEach(category=> { %>
+                                                    <option value="<%= category.categoryname %>">
+                                                        <%= category.categoryname %>
+                                                    </option>
+
+                                                    <% }); %>
+                                            </select>
+                                            <p id="categorynameError" class="error-message"></p>
+                                        </div>
+
+                                    </div> <!-- row.// -->
+                                </div>
+
+                                </form>
+                            </div>
+                        </div>
+                </section> <!-- content-main end// -->
+            </main>
+            <script>
+                function validateForm(event) {
+                 
+                    const form = document.getElementById('product-form');
+                    const productNameInput = document.getElementById('product_name');
+                    const descriptionInput = document.querySelector('textarea[name="description"]');
+                    const productPriceInput = document.querySelector('input[name="productprice"]');
+                    const salesPriceInput = document.querySelector('input[name="salesprice"]');
+                    const quantityInput = document.querySelector('input[name="quantity"]');
+                    const colorInput = document.querySelector('input[name="color"]');
+                    const imageInput = document.querySelector('input[name="file"]');
+                    const categoryInput = document.querySelector('select[name="categoryname"]');
+
+                    const productNameError = document.getElementById('productnameError');
+                    const descriptionError = document.getElementById('descriptionError');
+                    const promotionalPriceError = document.getElementById('promotionalPriceError');
+                    const salesPriceError = document.getElementById('salesPriceError');
+                    const quantityError = document.getElementById('quantityError');
+                    const colorError = document.getElementById('colorError');
+                    const imageError = document.getElementById('imageError');
+                    const categorynameError = document.getElementById('categorynameError');
+
+                    productNameError.textContent = '';
+                    descriptionError.textContent = '';
+                    promotionalPriceError.textContent = '';
+                    salesPriceError.textContent = '';
+                    quantityError.textContent = '';
+                    colorError.textContent = '';
+                    imageError.textContent = '';
+                    categorynameError.textContent = '';
+
+
+                    const maxNameLength = 60;
+                    let isValid = true;
+
+                    if (productNameInput.value.trim() === '') {
+                        productNameError.textContent = 'Product name is required.';
+                        isValid = false;
+                    }
+                    else if (productNameInput.value.length > maxNameLength) {
+
+                        productNameError.textContent = 'Product name exceeds the maximum limit.';
+                        isValid = false;
+                    }
+                    const maxDescriptionLength = 200;
+                    if (descriptionInput.value.trim() === '') {
+                        descriptionError.textContent = 'Description is required.';
+                        isValid = false;
+                    }
+                    else if (descriptionInput.value.length > maxDescriptionLength) {
+                        descriptionError.textContent = 'Description exceeds the maximum limit.'
+                        isValid = false;
+                    }
+
+                    if (salesPriceInput.value.trim() === '') {
+                        salesPriceError.textContent = 'promotional price is required.';
+                        isValid = false;
+                    }
+                    else if ((salesPriceInput.value !== '') && parseFloat(salesPriceInput.value) <= 0) {
+                        salesPriceError.textContent = 'Promotional price must be a greater than zero.';
+                        isValid = false;
+                    }
+
+                    if (productPriceInput.value.trim() === '') {
+                        promotionalPriceError.textContent = 'Regular price is required.';
+                        isValid = false;
+                    }
+                    else if (isNaN(productPriceInput.value) || parseFloat(productPriceInput.value) <= 0) {
+                        promotionalPriceError.textContent = 'Regular price must be greater than zero.';
+                        isValid = false;
+                    }
+
+
+                    if (quantityInput.value.trim() === '') {
+                        quantityError.textContent = 'Quantity is required.';
+                        isValid = false;
+                    }
+                    else if (parseFloat(quantityInput.value) <= 0) {
+                        quantityError.textContent = 'Quantity must be greater than zero.';
+                        isValid = false;
+                    }
+
+                    if (colorInput.value.trim() === '') {
+                        colorError.textContent = 'Color is required.';
+                        isValid = false;
+                    }
+
+                    const files = imageInput.files;
+                    if (files.length === 0) {
+                        imageError.textContent = 'Image is required.';
+                        isValid = false;
+                    }
+
+                    if (categoryInput.value === '') {
+                        categorynameError.textContent = 'Category is required.';
+                        isValid = false;
+                    }
+                    if (!isValid) {
+                        return false;
+                    }
+                    return isValid;
+                }
+
+
+
+            </script>
+            
+            <script src="/assets/js/vendors/jquery-3.6.0.min.js"></script>
+            <script src="/assets/js/vendors/bootstrap.bundle.min.js"></script>
+            <script src="/assets/js/vendors/select2.min.js"></script>
+            <script src="/assets/js/vendors/perfect-scrollbar.js"></script>
+            <script src="/assets/js/vendors/jquery.fullscreen.min.js"></script>
+            <!-- Main Script -->
+            <script src="/assets/js/main.js" type="text/javascript"></script>
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->
+
+</html>

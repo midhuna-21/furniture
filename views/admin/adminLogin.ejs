@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Furniture site</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="icon" href="/assets/imgs/theme/Black White Logo.png">
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+.content-main {
+background-image: url('/images/userRegister.webp');
+background-size: cover; 
+background-position: center; 
+background-repeat: no-repeat;
+max-width: 100%;
+max-height: 100%;
+height: 100vh;
+padding-top: 150px; 
+padding-bottom: 100px; 
+padding-left: 20px; 
+padding-right: 20px;  
+
+}
+*{
+margin: 0;  
+}
+</style>
+<body>          
+    <section class="content-main">
+        <div class="card mx-auto card-login "style= "background-color: rgba(255, 255, 255, 0.6); ">
+             <form action="/admin/login" method="post">
+                 <div class="card-body">
+                    <h4 class="card-title mb-4" style="text-align: center;">Log in</h4>
+                    <div class="mb-3">
+                        <input class="form-control" name="email" placeholder="Useremail" type="text">
+                        <p id="emailError" class="error-message"></p>
+                    </div> 
+                    <div class="mb-3">
+                        <input class="form-control" name="password"placeholder="Password" type="password"autocomplete="new-password">
+                        <p id="passwordError" class="error-message"></p>
+                    </div>
+                    <div class="mb-3">
+                         <a href="#" class="text-center " style="color: black;">Forgot password?</a>
+                    </div>
+                    <div class="mb-4">
+                        <button type="submit" class="btn btn-primary w-100 bg-dark"> Login </button>
+                    </div> 
+                </div>
+             </form>
+        </div>
+    </section>
+       
+<!--script-->
+<script>
+function validateform() {
+let emailInput = document.getElementsByName("email")[0];
+let passwordInput = document.getElementsByName("password")[0];
+let email = emailInput.value;
+let password = passwordInput.value;
+let isValid = true;
+document.getElementById("emailError").textContent = "";
+document.getElementById("passwordError").textContent = "";
+let emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+if (!emailRegex.test(email)) {
+    document.getElementById("emailError").textContent = "Please enter a valid email address.";
+    isValid = false;
+}
+if (password.length < 4) {
+    document.getElementById("passwordError").textContent = "in-valid password";
+    isValid = false;
+}
+return isValid;
+}
+</script>
+<script src="/assets/js/vendors/jquery-3.6.0.min.js"></script>
+<script src="/assets/js/vendors/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/vendors/jquery.fullscreen.min.js"></script>
+<!-- Main Script -->
+<script src="/assets/js/main.js" type="text/javascript"></script>
+</body>
+</html>

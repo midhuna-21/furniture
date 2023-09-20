@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/images/icons/favicon.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/slick/slick.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/MagnificPopup/magnific-popup.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+        <link href="uiHome/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link href="uiHome/css/tiny-slider.css" rel="stylesheet">
+		<link href="uiHome/css/style.css" rel="stylesheet">
+<!--===============================================================================================-->
+    <link href="https://fonts.googleapis.com/css?family=Economica" rel="stylesheet">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/simplecartjs/3.0.5/simplecart.min.js'></script>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" >
+    <style>
+        .nav-style a:link,
+.nav-style a:active {
+  list-style-type: none;
+  text-decoration: none;
+}
+
+#cart-icon{
+  margin-top:-13vh;
+  font-size:30px;
+  color:#800000;
+}
+
+#logo {
+  font: 3vmax Economica;
+  letter-spacing: 0.3em;
+  padding-top: 5px;
+  line-height: 5vmax;
+}
+
+.nav-style {
+  float: right;
+  border-bottom: 1px solid black;
+  padding:  2vh 5vw 12px 1vw;
+}
+
+nav ul li {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.nav-style a {
+  color: black;
+  font: 1.1vmax Ariel;
+}
+
+nav ul li a:hover {
+  font: 1.4vmax Ariel thick;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#sidenav {
+  margin-top: 30px;
+  position: absolute;
+}
+
+#sidenav a:link,
+p {
+  margin: 16px 85px;
+  display: block;
+  font: 16px Ariel #000000;
+  color: black;
+}
+h2{
+  
+  font-family:Ariel; font-weight:700;
+}
+.products-col {
+  margin-left: 27vw;
+}
+
+.main {
+  z-index: 3;
+  position: relative;
+  padding: 40px 10px 0 0;
+}
+
+.smaller-img {
+  width: 20vw;
+  height: 27vh;
+}
+
+figcaption {
+  text-align: left;
+}
+
+figcaption span {
+  font-weight: 700;
+}
+
+.flex-grid {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0;
+}
+
+.col {
+  flex: 0 1 22%;
+  margin: 7px 4px;
+  text-align:center;
+   padding: 0 0 0 0 ;
+}
+
+h6{
+ padding: 0 0 -27px 0 ;
+}
+
+/* Style for the main container */
+.main {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px; /* Adjust margin as needed */
+}
+
+
+/* Style for the category filter section */
+#sidenav {
+    width: 20%; /* Adjust the width as needed */
+    padding: 20px; /* Add padding as needed */
+    border-right: 1px solid #ccc; /* Add a border to separate categories and products */
+}
+
+.category-filter h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center; /* Center align the heading */
+}
+
+.category-filter ul {
+    list-style: none;
+    padding: 0;
+}
+
+.category-filter li {
+    margin-bottom: 5px;
+}
+
+.category-filter a {
+    text-decoration: none;
+    color: rgb(15, 15, 15); /* Set the default link color to blue */
+    transition: color 0.3s; /* Smooth transition for link color change */
+	/* font-weight: bold; */
+	font-family: 'Arial', sans-serif;
+}
+
+.category-filter a:hover {
+    color: rgb(74, 13, 130); /* Change the link color to black on hover */
+    text-decoration: underline; /* Underline the link on hover */
+}
+
+
+/* Style for the product listing section */
+.products-col {
+    width: 75%; /* Adjust the width as needed */
+    padding: 20px; /* Add padding as needed */
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+/* Style for the product item container */
+.product-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-info {
+    margin-top: 10px;
+    text-align: center;
+    width: 200px; /* Set a specific width for the product name container */
+	text-decoration: none;
+}
+
+.product-name {
+    font-size: 18px; /* Set the desired font size for the product name */
+    overflow: hidden;
+	text-decoration: none;
+	color: #0e0f4b;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.product-price {
+    font-size: 16px; /* Set the desired font size for the price */
+    color: #534f50; /* Customize the price color as needed */
+    margin-top: 5px;
+}
+
+.add-to-cart-button {
+    background-color: #0e0f4b; /* Customize the button background color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Add margin to separate the button from the price */
+}
+
+.add-to-cart-button:hover {
+    background-color: #5046a7; /* Customize the button hover color */
+}
+
+</style>
+</head>
+<body>
+	<!-- Start Header/Navigation -->
+	<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarsFurni">
+				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+					<li><a class="nav-link" href="/home">Home</a></li>
+					<li><a class="nav-link" href="/products">Shop</a></li>
+					<li><a class="nav-link" href="about.html">About us</a></li>
+					<li><a class="nav-link" href="services.html">Services</a></li>
+					<li><a class="nav-link" href="blog.html">Contact us</a></li>
+					
+				</ul>
+				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+					<li><a class="nav-link" href="/profile"><img src="uiHome/images/user.svg"></a></li>
+					<li><a class="nav-link" href="/cart"><img src="uiHome/images/cart.svg"></a></li>
+				</ul>
+			</div>
+		</div>		
+	</nav>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->		
+			<div class="logo-mobile">
+				<a href="index.html"><img src="/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+			</div>
+
+			<!-- Icon header -->
+			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+					<i class="zmdi zmdi-search"></i>
+				</div>
+
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+					<a href ="/cart"><i class="zmdi zmdi-shopping-cart"></a></i>
+				</div>
+
+				<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
+					<i class="zmdi zmdi-favorite-outline"></i>
+				</a>
+			</div>
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+			<div class="container-search-header">
+				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+					<img src="/images/icons/icon-close2.png" alt="CLOSE">
+				</button>
+
+				<form class="wrap-search-header flex-w p-l-15">
+					<button class="flex-c-m trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+					<input class="plh3" type="text" name="search" placeholder="Search...">
+				</form>
+			</div>
+		</div>
+	</header>
+        
+	<div class='main'>
+		<div id='sidenav'>
+			<div class="category-filter">
+				<h2>Categories</h2>
+				<ul>
+					<% categories.forEach(category => { %>
+						<% if (category.isListed) { %>
+							<li><a href="/products?categoryname=<%= category.categoryname %>"style="text-decoration: none" ><%= category.categoryname %></a></li>
+						<% } %>
+					<% }) %>
+				</ul>
+			</div>
+		</div>
+
+		<div class='products-col'>
+			<h2>PRODUCTS</h2>
+			<div class='product-grid'>
+				<% products.forEach(product => { %>
+					<% if (categoryname || (categoryname === 'all' || product.category === categoryname)) { %>
+						<div class="product-item">
+							<a href="/productdetails?productid=<%= product._id %>">
+								<img src="uploadProduct/<%= product.image[0] %>" alt="<%= product.producti %>">
+								<div class="product-info">
+									<h6 class="product-name"><%= product.productname %></h6>
+									<span class="product-price">₹<%= product.productprice %></span>
+								</div>
+								<% if (product.quantity <= 0) { %>
+									<p class="out-of-stock alert-danger">Out of Stock</p>
+								<% } else { %>
+									<button class="add-to-cart-button" data-productid="<%= product._id %>">Add to Cart</button>
+								<% } %>
+							</a>
+						</div>
+					<% } %>
+				<% }) %>
+			</div>
+		</div>		
+	</div>
+	
+	
+	
+<script>
+const addToCartButtons = document.querySelectorAll(".addtocart");
+
+addToCartButtons.forEach(button => {
+    button.addEventListener("click", function (e) {
+        const productId = button.getAttribute("data-productid");
+        console.log("clicked");
+
+        // Send a POST request to add the product to the cart with a quantity of 1.
+        fetch("/add-item-to-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ productId, quantity: 1 }), // Set quantity to 1
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Network response was not ok");
+            }
+        })
+        .then((data) => {
+            console.log(data);
+            // Optionally, you can redirect to the cart page here.
+            window.location.href = "/cart";
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    });
+});
+
+
+</script>
+	
+<!--===============================================================================================-->	
+	<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/bootstrap/js/popper.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/slick/slick.min.js"></script>
+	<script src="/js/slick-custom.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/parallax100/parallax100.js"></script>
+	<script>
+        $('.parallax100').parallax100();
+	</script>
+<!--===============================================================================================-->
+	<script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+		        delegate: 'a', // the selector for gallery item
+		        type: 'image',
+		        gallery: {
+		        	enabled:true
+		        },
+		        mainClass: 'mfp-fade'
+		    });
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="/vendor/isotope/isotope.pkgd.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/sweetalert/sweetalert.min.js"></script>
+	<script>
+		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function(){
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+		$('.js-addwish-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-detail');
+				$(this).off('click');
+			});
+		});
+
+		/*---------------------------------------------*/
+
+		$('.js-addcart-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to cart !", "success");
+			});
+		});
+	
+	</script>
+<!--===============================================================================================-->
+	<script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="/js/main.js"></script>
+
+</body>
+</html>

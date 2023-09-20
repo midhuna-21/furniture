@@ -1,0 +1,198 @@
+<%- include('../layouts/slidebar.ejs') %>
+    <style>
+        .table .category-cell {
+            max-width: 150px;
+    
+        }
+    </style>
+    <section class="content-main" style=" background-color: #f8f8f8;width: 1200px;">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Categories </h2>
+                <p>Add, edit or delete a category</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Search Categories" class="form-control bg-white">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <form action="/admin/addcategory" method="post" enctype="multipart/form-data"
+                            onsubmit="return validateForm()" id="categoryForm">
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Category Name</label>
+                                <input type="text" name="categoryname" placeholder="Type here" class="form-control"
+                                    id="category_name" />
+                                <p id="categoryNameError" class="error-message"></p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Description</label>
+                                <textarea placeholder="Type here" name="description" class="form-control"></textarea>
+                                <p id="descriptionError" class="error-message"></p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Image</label>
+                                <input type="file" name="file" class="form-control" id="category_image"
+                                    accept="image/*" />
+                                <p id="categoryImageError" class="error-message"></p>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary" type="submit">Create category</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="table-responsive">
+                            <table class="table"id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Image</th>
+                                        <th class="category-cell">Category</th>
+                                        <th class="category-cell">Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% categories.forEach((category, index)=>{ %>
+                                        <tr>
+                                            <td>
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td>
+                                                <img src="/uploadCategory/<%= category.image %>" width="80px" alt="img">
+                                            </td>
+                                            <td class="category-cell">
+                                                <%= category.categoryname %>
+                                            </td>
+                                            <td class="category-cell">
+                                                <%= category.description %>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/editcategory/<%= category._id %>"
+                                                    class="btn btn-info p-1">Edit</a>
+                                                <% if (category.isListed) { %>
+                                                    <a href="/admin/unlistcategory/<%= category._id %>"
+                                                        class="btn btn-danger p-1">Unlist</a>
+                                                    <% } else { %>
+                                                        <a href="/admin/listcategory/<%= category._id %>"
+                                                            class="btn btn-success p-1">List</a>
+                                                        <% } %>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- .col// -->
+                </div> <!-- .row // -->
+            </div> <!-- card body .// -->
+        </div> <!-- card .// -->
+    </section> <!-- content-main end// -->
+    </main>
+    <%- include('../layouts/slidefooter.ejs') %>
+
+    <script>
+        function validateForm() {
+            const categoryname = document.getElementById('category_name').value;
+            const description = document.querySelector('textarea[name="description"]').value;
+            const fileInput = document.getElementById('category_image');
+            const categoryNameError = document.getElementById('categoryNameError');
+            const descriptionError = document.getElementById('descriptionError');
+            const categoryImageError = document.getElementById('categoryImageError');
+
+            categoryNameError.textContent = ''; 
+            descriptionError.textContent = '';
+            categoryImageError.textContent = '';
+
+            const maxNameLength = 50;
+            const maxDescriptionLength = 50; 
+            const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+            const fileName = fileInput.value.toLowerCase();
+            const fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+
+            let isValid = true; 
+
+            if (categoryname.trim() === '') {
+                categoryNameError.textContent = 'Category Name is required.';
+                isValid = false; 
+            } else if (categoryname.length > maxNameLength) {
+                categoryNameError.textContent = `Category Name must not exceed ${maxNameLength} characters.`;
+                isValid = false;
+            }
+
+            if (description.trim() === '') {
+                descriptionError.textContent = 'Description is required.';
+                isValid = false;
+            } else if (description.length > maxDescriptionLength) {
+                descriptionError.textContent = `Description must not exceed ${maxDescriptionLength} characters.`;
+                isValid = false;
+            }
+
+            if (!fileInput.value) {
+                categoryImageError.textContent = 'Please select an image.';
+                isValid = false;
+            } else if (!allowedExtensions.includes(fileExtension)) {
+                categoryImageError.textContent = 'Invalid image format. Allowed formats: JPG, JPEG, PNG, GIF';
+                isValid = false;
+            }
+            if (!isValid) {
+                return false;
+            }
+            return true; 
+        }
+    </script>
+    <!--js-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+    $("#categoryForm").submit(function (e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+
+    $.ajax({
+        url: '/admin/addcategory',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                window.location.href = '/admin/addcategory';
+            } else {
+                if (response.message === 'Category name already exist') {
+                    $("#categoryNameError").text(response.message);
+                } else {
+                    console.log('Category addition failed:', response);
+                }
+            }
+        },
+        error: function (error) {
+            console.log("Error adding category:", error);
+        }
+    });
+});
+
+    </script>
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+      
+          let table = $('#myTable').DataTable({
+            "paging": true,          // Enable pagination
+            "pageLength": 5,        // Number of rows per page
+            "lengthMenu": [5,10, 25, 50, 75, 100],  // Dropdown options for rows per page
+          });
+        
+          table.on('draw', function() {
+            $(".paginate_button:not(.previous):not(.next)").addClass("number_button");
+          });
+        });
+
+
+        
+      </script>
