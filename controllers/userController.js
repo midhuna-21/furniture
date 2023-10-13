@@ -117,6 +117,14 @@ const sendVerifyMail = async (name, email, otp) => {
             html: `<p> Hi ${name},your otp is ${otp} verify</a> your mail</p>`,
 
         };
+
+const hai='hello'
+
+
+
+
+
+
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
