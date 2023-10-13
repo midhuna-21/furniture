@@ -91,7 +91,7 @@ const insertUser = async (req, res) => {
     }
 };
 
-// email sending process
+// email sending processsss
 const sendVerifyMail = async (name, email, otp) => {
     const email1=process.env.EMAIL
     const password=process.env.PASSWORD
