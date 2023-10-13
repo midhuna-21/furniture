@@ -6,16 +6,16 @@ const productController = require('../controllers/productController')
 const adminController = require('../controllers/adminController');
 const categoryUpload = require('../multer/category'); 
 const productUpload = require('../multer/product')
-const bannerUpload = require('../multer/banner')
+
 const orderController = require('../controllers/orderController')
 const couponController = require('../controllers/couponController')
-const bannerController = require('../controllers/bannerController')
-const offerController = require('../controllers/offerController')
+
+const salesReportController = require('../controllers/salesReportController')
 const auth = require('../middleware/auth')
 // adminController
 admin_router.get('/login',adminController.logAdmin);
 admin_router.post('/login',adminController.verifyAdminLogin)
-admin_router.get('/adminlogout',auth.isAdminAuthorized,adminController.adminLogout);
+admin_router.get('/adminlogout',adminController.adminLogout);
 admin_router.get('/users',auth.isAdminAuthorized,adminController.getUsers);
 admin_router.get('/block-unblock/:id',auth.isAdminAuthorized,adminController.blockUnblock); 
 
@@ -40,25 +40,29 @@ admin_router.get('/unlistproduct/:productId', productController.unListProduct);
 admin_router.get('/listproduct/:productId', productController.listProduct);
 // admin_router.get('/product',productController.productGrid)
 
-//ordermanagement
+//ordermanagement 
 admin_router.get('/orders',auth.isAdminAuthorized,orderController.orderManagement)
 admin_router.get('/order/:orderId',auth.isAdminAuthorized,orderController.orderDetailView)
-// admin_router.post('/order/:orderId/update-status',adminController.orderStatus)
+
 // coupon management
 admin_router.get('/couponlist',auth.isAdminAuthorized,couponController.couponList)
-admin_router.post('/admin/couponlist',auth.isAdminAuthorized, couponController.createCoupon);
+admin_router.get('/coupons',auth.isAdminAuthorized,couponController.coupons)
+admin_router.post('/addCoupon',auth.isAdminAuthorized,couponController.addCoupon)
+admin_router.get('/edit-coupon/:id',auth.isAdminAuthorized,couponController.editCouponPage)
+admin_router.post('/editcoupon/:id',auth.isAdminAuthorized,couponController.editCoupon)
+admin_router.post('/unListCoupon', couponController.unListCoupon);
+admin_router.post('/listCoupon', couponController.listCoupon);
 
 
 admin_router.post('/status/:orderId/',auth.isAdminAuthorized,orderController.updateStatus)
 
-admin_router.get('/banners',auth.isAdminAuthorized,bannerController.banners)
-admin_router.post('/banners',bannerUpload.array('file'),auth.isAdminAuthorized,bannerController.createBanner)
 
-admin_router.get('/categoryOffer',auth.isAdminAuthorized,offerController.categoryOffers)
-admin_router.post('/categoryOffer',auth.isAdminAuthorized,offerController. createCategoryOffer)
-admin_router.get('/productOffer',auth.isAdminAuthorized,offerController. productOffers )
-admin_router.post('/productOffer',auth.isAdminAuthorized,offerController.createProductOffer)
 
-admin_router.get('/dashbaord',auth.isAdminAuthorized,orderController.getDashboard)
+admin_router.get('/dashboard',auth.isAdminAuthorized,orderController.getDashboard)
+admin_router.get('/salesreport',auth.isAdminAuthorized,salesReportController.salesReport)
+
+admin_router.get('/reports/sales/download/:type',auth.isAdminAuthorized,salesReportController.adminDownloadReports);
+
+
 module.exports = admin_router;
  

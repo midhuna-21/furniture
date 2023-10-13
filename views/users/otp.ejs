@@ -1,0 +1,168 @@
+<%- include('../layouts/header.ejs') %>
+
+<style>
+    .content-main {
+        /* Set the background image */
+        background-image: url('/images/logui2.jpg');
+
+        /* Adjust background properties as needed */
+        background-size: cover;
+        /* Cover the entire section */
+        background-position: center;
+        /* Center the background image */
+        background-repeat: no-repeat;
+        /* Prevent image repetition */
+        max-width: 100%;
+        max-height: 100%;
+        height: 100vh;
+        /* Add additional styling */
+        padding-top: 150px;
+        /* Increase the top padding */
+        padding-bottom: 100px;
+        /* Increase the bottom padding */
+        padding-left: 20px;
+        /* Optional: Adjust left padding if needed */
+        padding-right: 20px;
+
+    }
+
+    * {
+        margin: 0;
+
+    }
+
+    .brand-header {
+        text-align: center;
+        font-family: CustomFont, sans-serif;
+        /* Use the custom font or a fallback sans-serif font */
+    }
+
+    .slogan {
+        text-align: center;
+        font-style: italic;
+        color: #555;
+        /* Customize the color to your preference */
+    }
+
+    .login-title {
+        text-align: center;
+    }
+
+    .brand-container {
+        height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-login {
+        margin-top: 20px;
+
+        background-color: rgba(161, 153, 149, 0.6);
+        margin-bottom: 30px;
+    }
+</style>
+    <section class="content-main">
+        <div class="card mx-auto card-login" style="background-color: rgba(255, 255, 255, 0.6); ">
+            <form id="otp" method="post">
+
+                <div class="card-body">
+                    <!-- <h4 class="card-title mb-4" style="text-align: center;">OTP</h4> -->
+
+                    <div class="mb-3">
+                        <h4 style="color: rgb(53, 48, 48); ">Enter OTP:</h4>
+                        <input class="form-control" name="otp" placeholder="Enter your OTP" type="text">
+                        <p id="otpError" style="color: red;" class="error-message"></p>
+                    </div>
+                    <span class="float-end" id="otp-counter"></span>
+                    <span class="float-end" id="resend-btn" style="color: rgb(1, 1, 105);" style="cursor: pointer;" hidden>Resend OTP</span>
+                    <div class="mb-4">
+                        <button type="submit" class="btn btn-primary w-100 " style="background-color:  rgb(53, 48, 48)"> Verify OTP
+                        </button>
+
+                    </div> 
+
+            </form>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const otpErr = document.querySelector('#otpError')
+    $(document).ready(function () {
+        $('#otp').submit(function (event) {
+            event.preventDefault();
+             otpErr.textContent = ''
+            let otp = $('input[name="otp"]').val(); // Correctly select the input field and get its value
+            const otpInput = $('input[name="otp"]').val();
+            let valid = true;
+                if (!otp) {
+                    valid = false;
+                    otpErr.textContent = 'Please enter otp';
+                }
+               
+          if(valid){
+            $.ajax({
+                type: "POST",
+                url: '/verifyotp<%= isReset ? "?reset=1" : "" %>',
+                data: { otp: otp },
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = response.redirect;
+                    } else {
+                        otpErr.textContent = response.message;
+                    }
+                },
+                error: function () {
+                    // Handle any errors that occur during the AJAX request
+                    const errorMessage = 'An error occurred';
+                    $('#error-message').text(errorMessage);
+                    $('#error-message').show(); // Show the error message element
+                }
+            });
+          }
+        })
+    })
+
+    let otpCounter = document.getElementById("otp-counter")
+    let resendBtn = document.getElementById("resend-btn")
+    function startCountdown() {
+    otpCounter.innerHTML = "Resend OTP in: 60s"
+    seconds = 60
+	countdownTimer = setInterval(() => {
+		seconds--
+		otpCounter.innerHTML = "Resend OTP in: " + seconds + "s"
+		if (seconds <= 0) {
+			clearInterval(countdownTimer)
+			otpCounter.hidden = true
+			resendBtn.hidden = false
+		}
+	}, 1000)
+}
+
+startCountdown()
+
+resendBtn.addEventListener("click", e => {
+	e.preventDefault()
+	fetch("/resendOtp", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				resendBtn.hidden = true
+				startCountdown()
+				otpCounter.hidden = false
+			} else
+				otpErr.innerHTML = data.message
+		})
+		.catch(error => {
+			console.error("Error:", error)
+		})
+})
+    
+    </script>
+
+    <%- include('../layouts/footer.ejs') %>

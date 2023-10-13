@@ -37,15 +37,34 @@ const addProduct = async(req, res)=>{
         console.log(error.message);
     }
 }
-// products
-const product = async(req, res)=>{
-    try{
+
+
+const product = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1; 
+        const pageSize = 5; 
+
+        const totalProducts = await Product.countDocuments();
+
+        const totalPages = Math.ceil(totalProducts / pageSize);
+        const skip = (page - 1) * pageSize;
+
         const products = await Product.find()
-        res.render('admin/products',{products})
-    }catch(error){
-        console.log(error.message)
+        .sort({ date: -1 })
+            .skip(skip) 
+            .limit(pageSize); 
+
+        res.render('admin/products', {
+            products,
+            currentPage: page,
+            totalPages,
+            sort: '-date', 
+        });
+    } catch (error) {
+        console.log(error.message);
     }
-}
+};
+
 
 // edit the product page
 const editProductPage = async(req, res)=>{
@@ -61,7 +80,6 @@ const editProductPage = async(req, res)=>{
 // edit product 
 const editProduct = async (req, res) => {
     try {
-
         const productId = req.params.productId; // Extract product ID from URL parameter
         const validProductId = new mongoose.Types.ObjectId(productId);
         const updatedProductData = {
@@ -97,17 +115,14 @@ const editProduct = async (req, res) => {
 };
 const listProduct = async (req, res) => {
     try {
+      
         const productId = req.params.productId;
-         console.log('produ',productId)
         const validProductId = new mongoose.Types.ObjectId(productId);
-        console.log('vval',validProductId)
-        // Make sure you await the query to find and update a single product
         const product = await Product.findByIdAndUpdate(validProductId, { isListed: true });
         console.log('product update',product)
         if (!product) {
             return res.status(404).send('Product not found');
         }
-
         res.redirect('/admin/products');
     } catch (error) {
         console.error(error.message);
@@ -117,17 +132,15 @@ const listProduct = async (req, res) => {
 
 const unListProduct = async (req, res) => {
     try {
+       
         const productId = req.params.productId;
-        console.log('produ',productId)
+        console.log('productId',productId)
         const validProductId = new mongoose.Types.ObjectId(productId);
-        console.log('vval',validProductId)
-        // Make sure you await the query to find and update a single product
         const product = await Product.findByIdAndUpdate(validProductId, { isListed: false });
         console.log('product update',product)
         if (!product) {
             return res.status(404).send('Product not found');
         }
-
         res.redirect('/admin/products');
     } catch (error) {
         console.error(error.message);
@@ -136,115 +149,116 @@ const unListProduct = async (req, res) => {
 };
 
 
-// list Categories based on products
-const allProducts = async (req, res) => {
+const renderProductsPage = async (req, res, queryConditions) => {
     try {
-      const search = req.query.search;
-  
-      // Find all categories with at least one listed product
-      const categories = await Category.aggregate([
-        {
-          $match: { isListed: true },
-        },
-        {
-          $lookup: {
-            from: 'products', // Assuming the name of your products collection
-            localField: 'categoryname',
-            foreignField: 'categoryname',
-            as: 'products',
-          },
-        },
-        {
-          $addFields: {
-            hasListedProducts: {
-              $gt: [{ $size: '$products' }, 0],
+        const page = parseInt(req.query.page) || 1;
+        const itemsPerPage = 4;
+
+        const categories = await Category.aggregate([
+            {
+                $match: { isListed: true },
             },
-          },
-        },
-        {
-          $match: { hasListedProducts: true },
-        },
-      ]);
-  
-      // If categoryname is not provided or is 'all', set it to 'all' and retrieve all products
-      const categoryname = req.query.categoryname || 'all';
-  
-      let products;
-      if (categoryname === 'all') {
-        if (search) {
-          products = await Product.find({
-            productname: { $regex: new RegExp(search) },
-            isListed: true, // Only display listed products
-          })
-            .sort({ date: -1 }) // Sort by the 'date' field in descending order (newest first)
-            .lean();
-        } else {
-          // If no search criteria, display all products that are listed (isListed is true)
-          products = await Product.find({ isListed: true })
-            .sort({ date: -1 }) // Sort by the 'date' field in descending order (newest first)
-            .lean();
+            {
+                $lookup: {
+                    from: 'products',
+                    localField: 'categoryname',
+                    foreignField: 'categoryname',
+                    as: 'products',
+                },
+            },
+            {
+                $addFields: {
+                    hasListedProducts: {
+                        $gt: [{ $size: '$products' }, 0],
+                    },
+                },
+            },
+            {
+                $match: { hasListedProducts: true },
+            },
+        ]);
+
+        const categoryname = req.query.categoryname || 'all';
+        
+        let totalProductsCount;
+        let products;
+
+        if (categoryname !== 'all') {
+            const selectedCategory = categories.find((cat) => cat.categoryname === categoryname);
+            console.log('seel', selectedCategory);
+            if (!selectedCategory) {
+                console.log('Category not found');
+                return res.render('users/products', { categories, products: [], categoryname });
+            }
+
+            queryConditions.categoryname = selectedCategory.categoryname;
         }
-      } else {
-        // Find the category by name
-        const selectedCategory = categories.find((cat) => cat.categoryname === categoryname);
-  
-        // If a specific category is provided and it's not found, handle the error
-        if (!selectedCategory) {
-          console.log('Category not found');
-          return res.render('users/products', { categories, products: [], categoryname });
-        }
-  
-        // Query products based on the selected category and whether they are listed (isListed is true)
-        products = await Product.find({
-          categoryname: selectedCategory.categoryname,
-          isListed: true,
-        })
-          .sort({ date: -1 }) // Sort by the 'date' field in descending order (newest first)
-          .lean();
-      }
-  
-      console.log(products);
-  
-      return res.render('users/products', { categories, products, categoryname });
+        totalProductsCount = await Product.countDocuments(queryConditions);
+
+        products = await Product.find(queryConditions)
+            .sort({ date: -1 })
+            .skip((page - 1) * itemsPerPage)
+            .limit(itemsPerPage)
+            .lean();
+
+        const totalPages = Math.ceil(totalProductsCount / itemsPerPage);
+
+        return res.render('users/products', {
+            categories,
+            products,
+            categoryname,
+            currentPage: page,
+            totalPages: totalPages,
+        });
     } catch (error) {
-      console.log(error.message);
-      // Handle any other errors that might occur during the execution of the code
-      return res.status(500).send('Internal Server Error');
+        console.log(error.message);
     }
-  };
+};
+
+// allProducts route handler
+const allProducts = async (req, res) => {
   
-  
+    try {
+        const listedCatgories = await Category.find({ isListed: true}).lean();
+        const listedCategoryNames = listedCatgories.map((category) => category.categoryname);
+        const queryConditions = {
+            isListed: true,
+            categoryname: {$in: listedCategoryNames},
+        }
+        await renderProductsPage(req, res, queryConditions);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+// searchProducts route handler
+const searchProducts = async (req, res) => {
+    try {
+        const searchQuery = req.body.search;
+        const queryConditions = {
+            categoryname: { $regex: new RegExp(searchQuery, 'i') },
+        };
+
+        // Call the common renderProductsPage function with search results
+        await renderProductsPage(req, res, queryConditions);
+    } catch (error) {
+        console.error(error.message);
+    }
+};
+
 // product Details
 const productDetails = async(req, res)=>{
     try{
-        console.log('gjoj')
         const products = await Product.find({_id: req.query.productid})
-       
         res.render('users/productdetail',{products})
     }catch(error){
         console.log(error.message);
     }
 }
-const searchCategory = async(req, res)=>{
-    console.log('keri')
-    try {
-        const searchQuery = req.query.search;
-        const category = await Category.findOne({ categoryname: searchQuery });
-        
-        if (!category) {
-            return res.status(404).json({ error: 'Category not found' });
-        }
-        const products = await Product.find({ category: category._id });
 
-        res.status(200).json({ category, products });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Server error' });
-    }
-};
 const products = async(req, res)=>{
     try{
-        res.render('users/products.ejs')
+        res.render('users/products')
     }catch(error){
         console.log(error.message)
     }
@@ -256,13 +270,13 @@ module.exports={
     addProduct,
     product,
     products,
-    // deleteProduct,
     listProduct,
     unListProduct,
     editProductPage,
     editProduct,
     allProducts,
     productDetails,
-    searchCategory ,
+    searchProducts ,
+   
     
 }

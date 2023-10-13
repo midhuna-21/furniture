@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const session = require('express-session')
 const User = require('../models/userModel')
-const Cart = require('../models/cartModel');
 const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
 const Order = require('../models/orderModel')
@@ -19,32 +18,45 @@ const orderDetails = async(req, res)=>{
         const products = await Product.find()
         const user = await User.findById(userId)
         const order = await Order.findById(orderId).populate('products.productId user');
+    
         res.render('users/orderdetails',{order,user,products})
     }catch(error){
-        console.log(error.message)
+        res.render('/error')
     }
 }
-
 const orderList = async (req, res) => {
-    
-    try {
-        const products = await Product.find();
-        const userId = req.session.user_id;
-        const user = await User.findById(userId);
-        const order = await Order.find({ user: userId }).populate('products.productId');
-        
-        // Sort orders by orderDate in descending order (most recent first)
-        order.sort((a, b) => b.orderDate - a.orderDate);
+  try {
+      const products = await Product.find();
+      const userId = req.session.user_id;
+      const user = await User.findById(userId);
 
-        const formattedOrders = order.map(order => ({
-            ...order.toObject(),
-            formattedOrderDate: order.orderDate.toLocaleDateString()
-        }));
-        
-        res.render('users/orderlist', { order: formattedOrders, user, products });
-    } catch (error) {
-        console.log(error.message);
-    }
+      const perPage = 6; 
+      const page = parseInt(req.query.page) || 1;
+
+      const orderCount = await Order.countDocuments({ user: userId });
+      const totalPages = Math.ceil(orderCount / perPage);
+
+      const orders = await Order.find({ user: userId })
+          .populate('products.productId')
+          .sort({ orderDate: -1 }) 
+          .skip((page - 1) * perPage)
+          .limit(perPage);
+
+      const formattedOrders = orders.map(order => ({
+          ...order.toObject(),
+          formattedOrderDate: order.orderDate.toLocaleDateString()
+      }));
+
+      res.render('users/orderlist', {
+          order: formattedOrders,
+          user,
+          products,
+          currentPage: page,
+          totalPages: totalPages
+      });
+  } catch (error) {
+      res.render('/error')
+  }
 };
 
 const cancelOrder = async (req, res) => {
@@ -62,8 +74,6 @@ const cancelOrder = async (req, res) => {
         if (order.orderStatus === 'Delivered') {
             return res.status(400).json({ message: 'Cannot cancel a delivered order' });
         }
-
-        // Calculate the difference in days between the order date and the current date
         const currentDate = new Date();
         const orderDate = order.orderDate;
         const daysDifference = Math.floor((currentDate - orderDate) / (1000 * 60 * 60 * 24));
@@ -72,13 +82,17 @@ const cancelOrder = async (req, res) => {
             return res.status(400).json({ message: 'Cannot cancel an order placed for more than 10 days' });
         }
 
-        const canceledAmount = order.totalprice;
-        const userId = order.user;
-        await walletHelper.updateWalletBalance(userId, canceledAmount);
+        if (order.paymentMethod !== 'cod') {
+          const canceledAmount = order.totalprice;
+          const userId = order.user;
+          const transactionType = 'credit';
+          await walletHelper.updateWalletBalance(userId, canceledAmount, transactionType);
+      }
+
         order.orderStatus = 'Cancelled';
         await order.save();
 
-        return res.status(200).json({ message: 'Order has been cancelled' });
+        return res.json({ success: true });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
@@ -86,70 +100,90 @@ const cancelOrder = async (req, res) => {
 };
 
 const returnOrder = async (req, res) => {
-    try {
-        const { orderId } = req.body;
-        const order = await Order.findById(orderId);
+  try {
+      const { orderId ,selectedReason } = req.body;
+      const order = await Order.findById(orderId);
 
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
+      if (!order) {
+        return res.status(404).json({ error: 'Order not found' });
+      }
+      
+      if (order.orderStatus !== 'Delivered') {
+        return res.status(400).json({ error: 'NotDelivered' });
+      }
+      
+      if (daysDifference > 10) {
+        return res.json({ error: 'Over10Days' });
+      }
 
-        if (order.orderStatus === 'Placed') {
-            return res.status(400).json({ message: 'Cannot return an order that is not placed' });
-        }
+      const currentDate = new Date();
+      const orderDate = order.orderDate;
+      const daysDifference = Math.floor((currentDate - orderDate) / (1000 * 60 * 60 * 24));
 
-        // Calculate the difference in days between the order date and the current date
-        const currentDate = new Date();
-        const orderDate = order.orderDate;
-        const daysDifference = Math.floor((currentDate - orderDate) / (1000 * 60 * 60 * 24));
+      if (daysDifference > 10) {
+          return res.json({ message: 'Cannot return an order placed for more than 10 days' });
+      }
 
-        if (daysDifference > 10) {
-            return res.status(400).json({ message: 'Cannot return an order placed for more than 10 days' });
-        }
+      order.orderStatus = 'Returned'; 
+      order.reasonResponse = selectedReason;
+      await order.save();
 
-        // Add logic to handle the return process here
-        // Set the order status to 'Returned' or similar
-        order.orderStatus = 'Cancelled'; // You can customize this status
+      return res.json({ success: true});
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
-        await order.save();
 
-        return res.status(200).json({ message: 'Product return initiated successfully' });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
-    }
+const orderManagement = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = 10;
+
+
+    const skipp = (page - 1) * itemsPerPage;
+
+    const orders = await Order.find()
+      .sort({ orderDate: -1 }) 
+      .skip(skipp)
+      .limit(itemsPerPage)
+      .populate('products.productId user');
+     
+
+    const totalOrders = await Order.countDocuments();
+
+    const formattedOrders = orders.map((order) => {
+      return {
+        ...order.toObject(),
+        formattedOrderDate: order.orderDate.toLocaleDateString(),
+      };
+    });
+
+    const totalPages = Math.ceil(totalOrders / itemsPerPage);
+
+    res.render('admin/orderManagement', {
+      orders: formattedOrders,
+      totalPages,
+      currentPage: page,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Internal Server Error');
+  }
 };
 
 
 
-const orderManagement = async(req, res)=>{
-    try{
-        console.log('ordermanage')
-        const orders = await Order.find().populate('products.productId user');
-        console.log('orders',orders)
-        const formattedOrders = orders.map(order => {
-            return {
-                ...order.toObject(),
-                formattedOrderDate: order.orderDate.toLocaleDateString()
-            };
-        });
-        console.log('hfks')
-        res.render('admin/orderManagement', { orders: formattedOrders });
-
-    }catch(error){
-        console.log(error.message)
-           res.status(500).send('Internal Server Error');
-    }
-}
 const orderDetailView = async(req, res)=>{
-    console.log('orderdetail')
+   
     try{
         const orderId = req.params.orderId;
-        console.log('orderId',orderId)
         const orders = await Order.findById(orderId).populate('products.productId user');
+        
         res.render('admin/orderDetail',{orders: [orders]})
     }catch(error){
-        console.log(error.message)
+       res.render('/error')
     }
 }
 const updateStatus = async(req, res)=>{
@@ -157,36 +191,39 @@ const updateStatus = async(req, res)=>{
        
         const { orderId } = req.params;
         const { newStatus } = req.body;
-        console.log('nessta',newStatus)
-          console.log('bbbbbb')
         const order = await Order.findById(orderId);
 
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
-        console.log('kkkkkk')
+        
+        if (order.orderStatus === 'Delivered') {
+          return res.status(400).json({ message: 'Order is already delivered' });
+      }
         if (order.orderStatus === 'Cancelled') {
             return res.status(400).json({ message: 'Order is already canceled' });
         }
-        console.log('dddddddd')
         order.orderStatus = newStatus;
-        console.log('newStatus:', newStatus);
 
+        if (newStatus === 'Delivered') {
+          order.delivered = {
+              deliveredDate: new Date(),
+          };
+        }
         await order.save();
 
-        res.json({ message: 'Order status updated successfully.', updatedStatus: order.orderStatus });
+        res.json({ success:true });
 
     }catch(error){
-        console.log(error.message)
+        res.render('/error')
     }
 }
 const walletDispaly = async(req, res)=>{
     try{
-        
             const userId = req.session.user_id; 
     
             const wallet = await Wallet.findOne({ userId });
-            console.log('walle',wallet)
+           
             if (!wallet) {
                 return res.render('wallet', { walletTransactions: [] });
             }
@@ -219,8 +256,8 @@ async function calculateDeliveredOrderTotal() {
     if (totalData.length === 0) {
       return {
         _id: null, 
-        totalPriceSum: 0, // or any default value you prefer
-        count: 0, // or any default value you prefer
+        totalPriceSum: 0, 
+        count: 0, 
       };
     }
 
@@ -229,8 +266,6 @@ async function calculateDeliveredOrderTotal() {
     throw error;
   }
 }
-
-
 
 async function calculateCategorySales() {
   try {
@@ -417,6 +452,7 @@ async function calculateCodOrderCountAndTotal() {
 }
 
 
+
 async function getLatestOrders() {
   try {
     const latestOrders = await Order.aggregate([
@@ -425,19 +461,44 @@ async function getLatestOrders() {
       },
       {
         $sort: {
-          date: -1, 
+          date: -1,
         },
       },
       {
-        $limit: 10, 
+        $limit: 10,
+      },
+      {
+        $lookup: {
+          from: 'users', 
+          localField: 'user',
+          foreignField: '_id',
+          as: 'userDetails',
+        },
+      },
+      {
+        $addFields: {
+          username: {
+            $arrayElemAt: ['$userDetails.name', 0],
+          },
+          address: {
+            $arrayElemAt: ['$userDetails.address.name', 0], 
+          },
+        },
+      },
+      {
+        $project: {
+          userDetails: 0, 
+        },
       },
     ]);
 
     return latestOrders;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 }
+
+
 
 
 async function calculateListedCategoryCount() {
@@ -471,17 +532,17 @@ const getDashboard =async (req,res)=>{
     //  console.log(orders,"get dashBordorders")
     //    console.log(categorySales,"get dashBorders categorySales")
     //    console.log(salesData,"get dashBorders  salesData")
-      //  console.log(salesCount,"get dashBordersData salesCount")
-      //  console.log(categoryCount ,"get dashBorders categoryCount ")
-      //  console.log(productsCount,"get dashBorders productsCount")
-      //  console.log(onlinePay,"get dashBord onlinePay")
-      //  console.log(codPay,"get dashBord codPay")
-      //  console.log(latestorders,"get dashBord latestorders")
-      //  console.log("productsCount:", productsCount);
-      //  console.log("categoryCount:", categoryCount);
-      console.log("onlinePay.totalPriceSum:", onlinePay[0].totalPriceSum);
-      console.log("onlinePay.count:", onlinePay[0].count);
-      
+    //    console.log(salesCount,"get dashBordersData salesCount")
+    //    console.log(categoryCount ,"get dashBorders categoryCount ")
+    //    console.log(productsCount,"get dashBorders productsCount")
+    //    console.log(onlinePay,"get dashBord onlinePay")
+    //    console.log(codPay,"get dashBord codPay")
+    //    console.log(latestorders,"get dashBord latestorders")
+    //    console.log("productsCount:", productsCount);
+    //    console.log("categoryCount:", categoryCount);
+    //   console.log("onlinePay.totalPriceSum:", onlinePay[0].totalPriceSum);
+    //   console.log("onlinePay.count:", onlinePay[0].count);
+      console.log('uasername',latestorders)
        
        res.render('admin/adminDashboard',{orders,productsCount,categoryCount,
             onlinePay:onlinePay[0],salesData,order:latestorders,salesCount,
@@ -489,10 +550,10 @@ const getDashboard =async (req,res)=>{
       
     }
      catch (error) {
-      console.log(error.message)
+      res.render('/error')
     }
     
-    }
+  }
 
     async function getOrderById(orderId) {
       try {
@@ -505,7 +566,7 @@ const getDashboard =async (req,res)=>{
     }
 
     const getOrderInvoice = async (req,res)=>{
-      // let result;
+    
       try {
         const id = req.query.orderId
       
@@ -515,7 +576,7 @@ const getDashboard =async (req,res)=>{
        
         const date = result.orderDate.toLocaleDateString();
         const product = result.products;
-        // console.log(result,"inv2");
+        
     
         const order = {
           id: id,
@@ -552,7 +613,7 @@ const getDashboard =async (req,res)=>{
     
     
           sender: {
-            company: "Noizz",
+            company: "Halang",
             address: "Brototype",
             zip: "686633",
             city: "Maradu",
@@ -615,9 +676,10 @@ const getDashboard =async (req,res)=>{
        
        
       } catch (error) {
-        console.log(error)
+        res.render('/error')
       }
     }
+
 module.exports = {
     orderDetails,
     orderList,
@@ -628,6 +690,5 @@ module.exports = {
     updateStatus,
     walletDispaly,
     getDashboard,
-    getOrderInvoice
-  
+    getOrderInvoice,  
 }

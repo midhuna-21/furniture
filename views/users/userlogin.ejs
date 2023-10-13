@@ -1,103 +1,192 @@
 <%- include('../layouts/header.ejs') %>
 
-<style>
-    .content-main {
-/* Set the background image */
-background-image: url('/images/userRegister.webp');
+    <style>
+        .content-main {
+            /* Set the background image */
+            background-image: url('/images/logui2.jpg');
 
-/* Adjust background properties as needed */
-background-size: cover; /* Cover the entire section */
-background-position: center; /* Center the background image */
-background-repeat: no-repeat; /* Prevent image repetition */
-max-width: 100%;
-max-height: 100%;
-height: 100vh;
-/* Add additional styling */
-padding-top: 150px;    /* Increase the top padding */
-padding-bottom: 100px; /* Increase the bottom padding */
-padding-left: 20px;   /* Optional: Adjust left padding if needed */
-padding-right: 20px;  
+            /* Adjust background properties as needed */
+            background-size: cover;
+            /* Cover the entire section */
+            background-position: center;
+            /* Center the background image */
+            background-repeat: no-repeat;
+            /* Prevent image repetition */
+            max-width: 100%;
+            max-height: 100%;
+            height: 100vh;
+            /* Add additional styling */
+            padding-top: 150px;
+            /* Increase the top padding */
+            padding-bottom: 100px;
+            /* Increase the bottom padding */
+            padding-left: 20px;
+            /* Optional: Adjust left padding if needed */
+            padding-right: 20px;
 
-}
-*{
-margin: 0;
+        }
 
-}
+        * {
+            margin: 0;
 
-</style>  
-<section class="content-main">
-    <div class="card mx-auto card-login "style= "background-color: rgba(255, 255, 255, 0.6); ">
-        <form action="/home" name="register"  onsubmit="return validateform()" method="post">
-          
-        <div class="card-body">
-            <h4 class="card-title mb-4">Login</h4>
-            <% if (messages && messages.length > 0) { %>
-                <!-- Display the message div only when messages are present -->
-                <div class="alert alert-danger" role="alert">
-                    <%= messages %>
-               
-                <% } %>
+        }
 
-                <div class="mb-3">
-                    <input class="form-control" name="email" placeholder="Useremail" type="text">
-                    <p id="emailError" class="error-message  alert-danger"><%= messages.email %></p>
-                </div> <!-- form-group// -->
-                    <div class="mb-3">
-                    <input class="form-control" name="password"placeholder="Password" type="password" autocomplete="new-password" >
-                    <p id="passwordError" class="error-message  alert-danger"><%=  messages.password %></p>
-                </div> <!-- form-group// -->
-                <div class="mb-3">
-                    <!-- <a href="/email" class="float-end font-sm text-muted">Forgot password?</a>
-                    <label class="form-check">
-                        <input type="checkbox" class="form-check-input" checked="">
-                        <span class="form-check-label">Remember</span>
-                    </label> -->
-                </div> <!-- form-group form-check .// -->
-               
-               
-                <div class="mb-4">
-                    <button type="submit" class="btn btn-primary w-100" style="background-color:  grey"> Login </button>
-                </div> <!-- form-group// -->    
-            <p class="text-center mb-4" style="color: black;">Don't have account? <a href="/register" style="color: blue">Sign up</a></p>
+        .brand-header {
+            text-align: center;
+            font-family: CustomFont, sans-serif;
+            /* Use the custom font or a fallback sans-serif font */
+        }
 
+        .slogan {
+            text-align: center;
+            font-style: italic;
+            color: #555;
+            /* Customize the color to your preference */
+        }
+
+        .login-title {
+            text-align: center;
+        }
+
+        .brand-container {
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-login {
+            margin-top: 20px;
+ 
+            background-color: rgba(161, 153, 149, 0.6);
+            margin-bottom: 30px;
+        }
+    </style>
+
+    <section class="content-main">
+        <div class="brand-container">
+            <div class="brand-header"
+                style="color: white; font-size: 20px; ">
+                <!-- Brand name content -->
+                <h3><span>Halang.</span></h3>
+            </div>
         </div>
-        
-        </form>
-    </div>
-</section>
 
 
-<script>
-function validateform() {
+        <div class="card mx-auto card-login">
+            <form id="loginForm">
+                <div class="card-body">
+                    <div class="login-title">
+                        <h4 class="signin-title"
+                            style="color: rgb(53, 48, 48); font-family: sans-serif; font-size: 24px; font-weight: bold; text-align: center; text-transform: uppercase;">
+                            Sign in</h4>
+                    </div>
 
-var emailInput = document.getElementsByName("email")[0];
-var passwordInput = document.getElementsByName("password")[0];
+                    <div class="mb-3">
+                        <input class="form-control" name="email" placeholder="Useremail" type="text" autocomplete="off"
+                            autocorrect="off" autocapitalize="off">
+                        <p id="emailError" style="color: red;" class="error-message"></p>
+                    </div> <!-- form-group// -->
+                    <div class="mb-3">
+                        <input class="form-control" name="password" placeholder="Password" type="password"
+                            autocomplete="new-password">
+                        <p id="passwordError" style="color: red;" class="error-message"></p>
+                    </div> <!-- form-group// -->
+                    <div id="blockedMessage" style="color: red;" class="error-message"></div>
+                    <div class="mb-3">
+                        <!-- Add a "Forgot Password" link or button -->
+                        <a href="/email" style="color: rgb(1, 1, 105);">Forgot Password?</a>
+                    </div>
+                    <div class="mb-3">
+                    </div> <!-- form-group form-check .// -->
+                    <div id="successMessage" style="display: none;">
+                        Login successful
+                    </div>
 
-var email = emailInput.value;
-var password = passwordInput.value;
 
-var isValid = true;
+                    <div class="mb-4">
+                        <button type="submit" class="btn btn-primary w-100" style="background-color:  rgb(53, 48, 48)">
+                            sign in
+                        </button>
+                    </div> <!-- form-group// -->
+                    <p class="text-center mb-4" style="color: black;">Don't have account? <a href="/register"
+                            style="color: rgb(1, 1, 105);">Sign up</a></p>
 
-// Reset error messages
+                </div>
 
-document.getElementById("emailError").textContent = "";
-document.getElementById("passwordError").textContent = "";
+            </form>
+        </div>
+    </section>
+    <script>
+        window.onload = function () {
+            var emailInput = document.querySelector('input[name="email"]');
+            var passwordInput = document.querySelector('input[name="password"]');
+            emailInput.value = '';
+            passwordInput.value = '';
+        }
+    </script>
 
-// Validate email
-var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-if (!emailRegex.test(email)) {
-    document.getElementById("emailError").textContent = "Please enter email address.";
-    isValid = false;
-}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-// Validate password
-if (password.length < 4) {
-    document.getElementById("passwordError").textContent = "Please enter password";
-    isValid = false;
-}
+    <script>
+        $(document).ready(function () {
+            $('#loginForm').submit(function (event) {
+                event.preventDefault();
 
-return isValid;
-}
-</script>
+                var email = $('input[name="email"]').val().trim();
+                var password = $('input[name= "password"]').val().trim();
+                if (!email && !password) {
 
-<%- include('../layouts/footer.ejs') %>
+                    $('#emailError').text('Please enter email');
+                    $('#passwordError').text('Please enter password');
+                    return;
+                } else if (!email) {
+
+                    $('#emailError').text('Please enter email');
+                    return;
+                }
+
+                else if (!password) {
+
+                    $('#passwordError').text('please enter password');
+                    return;
+                }
+                $('#emailError').text('');
+                $('#passwordError').text('');
+                $('#blockedMessage').text('');
+
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/home',
+                    data: formData,
+                    dataType: 'JSON',
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = '/';
+                        } else {
+                            if (response.message === 'Your account is blocked from admin.') {
+                                $('#blockedMessage').text(response.message);
+                            } else if (response.message === 'please verify your email') {
+                                $('#emailError').text(response.message);
+                            } else if (response.message === 'Email is in incorrect') {
+                                $('#emailError').text(response.message);
+                            } else if (response.message === 'Password is in incorrect') {
+
+                                $('#passwordError').text(response.message)
+                            } else {
+                                console.error(response.message)
+                            }
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <%- include('../layouts/footer.ejs') %>

@@ -108,19 +108,10 @@
     }
 
     /* Style the submenu links */
-    .submenu a {
-        color: white;
-        /* Replace with the default color */
-        text-decoration: none;
-        /* Remove underline from links */
-        /* Add a smooth color transition effect */
-    }
+   
 
-    /* Change the color on hover for submenu links */
-    .submenu a:hover {
-        color: black;
-        /* Replace with the hover color */
-    }
+  
+  
 
     /* Style the link text */
     .ss a {
@@ -159,8 +150,21 @@
                 <nav>
                     <ul class="menu-aside">
                         <li class="menu-item">
-                            <a class="menu-link" href="index.html"> <i class="icon material-icons md-home"></i>
+                            <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
                                 <span class="text">Dashboard</span>
+                            </a>
+                        </li>
+                          
+                        <li class="menu-item">
+                            <a class="menu-link" href="/admin/users"> <i class="icon material-icons md-person"></i>
+                                <span class="text">users</span>
+                            </a>
+                            
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="/admin/addcategory"> <i
+                                    class="icon material-icons md-add_box"></i>
+                                <span class="text">Add Category</span>
                             </a>
                         </li>
                         <li class="menu-item has-submenu ">
@@ -171,59 +175,41 @@
                             <div class="submenu">
                                 <a href="/admin/products" class="ss">Product List</a>
                                 <a href="/admin/addproduct">Add product</a>
-                                <a href="/admin/productOffer">Offers</a>
+                              
                             </div>
                         </li>
-                        <li class="menu-item has-submenu ">
-                            <a class="menu-link" href="page-orders-1.html"> <i
-                                    class="icon material-icons md-shopping_cart"></i>
+
+                        <li class="menu-item">
+                            <a class="menu-link" href="/admin/orders"> <i
+                                class="icon material-icons md-shopping_cart"></i>
                                 <span class="text">Orders</span>
                             </a>
-                            <div class="submenu">
-                                <a href="/admin/orders">Order list </a>
-                            </div>
                         </li>
                         <li class="menu-item has-submenu ">
-                            <a class="menu-link" href="page-orders-1.html"> <i
-                                    class="icon material-icons md-shopping_cart"></i>
-                                <span class="text">Coupon</span>
+                            <a class="menu-link" href="page-products-list.html"> 
+                                <span class="text">Coupons</span>
                             </a>
                             <div class="submenu">
-                                <a href="/admin/couponlist">Create Coupon </a>
+                                <a href="/admin/couponlist" class="ss">Add Coupon</a>
+                    
+                                <a href="/admin/coupons">Coupons</a>
+                                
                             </div>
                         </li>
-                        <li class="menu-item has-submenu">
-                            <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
-                                <span class="text">Banners</span>
+                        
+                        
+                      
+                        <li class="menu-item">
+                            <a class="menu-link" href="/admin/salesreport"> 
+                                <span class="text">sales Report</span>
                             </a>
-                            <div class="submenu">
-                                <a href="/admin/banners">Banner</a>
-                            </div>
-                        </li>
-                        <li class="menu-item has-submenu">
-                            <a class="menu-link" href="page-form-product-1.html"> <i
-                                    class="icon material-icons md-add_box"></i>
-                                <span class="text">Add Category</span>
-                            </a>
-                            <div class="submenu">
-                                <a href="/admin/addcategory">Add category</a>
-                                <a href="/admin/categoryOffer">Offers</a>
-                            </div>
-                        </li>
-                        <li class="menu-item has-submenu">
-                            <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
-                                <span class="text">users</span>
-                            </a>
-                            <div class="submenu">
-                                <a href="/admin/users">User list</a>
-                            </div>
                         </li>
                     </ul>
                     <hr>
                     <ul class="menu-aside">
-                        <li class="menu-item has-submenu">
-                            <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
-                                <span class="text">Settings</span>
+                        <li class="menu-item ">
+                            <a class="menu-link" href="/admin/adminlogout"> 
+                                <span class="text">Logout</span>
                             </a>
                         </li>
                     </ul>

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
+
 const connectDB = () =>{
-    return mongoose.connect('mongodb://127.0.0.1:27017/Store', {
+    return mongoose.connect('mongodb+srv://krishnamidhuna:J6OhhW4bkrtshDG2@cluster0.mu4ufpz.mongodb.net/', {
         useNewUrlParser : true,
         useUnifiedTopology: true,
     })
@@ -14,3 +15,5 @@ const connectDB = () =>{
 }
 
 module.exports = connectDB;
+
+

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Shoping Cart</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" href=" /assets/imgs/theme/Black White Logo.png">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!--===============================================================================================-->
+	<link href="uiHome/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link href="uiHome/css/tiny-slider.css" rel="stylesheet">
+	<link href="uiHome/css/style.css" rel="stylesheet">
+</head>
+<style>
+	/* Add your custom styles here */
+	.address-container {
+		border: 1px solid #ccc;
+		padding: 10px;
+		margin: 10px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.edit-button,
+	.delete-button {
+		cursor: pointer;
+		padding: 5px 10px;
+		background-color: #181e23;
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+	}
+
+	.add-button {
+		margin-top: 10px;
+		padding: 10px;
+		background-color: #3c9596;
+		color: #fff;
+		text-decoration: none;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	/* Style for the "Edit Address" button */
+.edit-address-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3c9596; /* Button background color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.edit-address-button:hover {
+    background-color: #88a8a1; /* Hover color */
+}
+
+/* Style for the "Delete" button */
+.delete-address-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #003b5d; /* Button background color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.delete-address-button:hover {
+    background-color: #a1acc0; /* Hover color */
+}
+.footer-divider {
+    width: 100%; /* Increase the width to 95% */
+    height: 0.5px;
+    background-color: #c6bdbd;
+    margin: 20px auto; /* Center the divider horizontally */
+	margin-top: 50px;
+}
+.footer-section{
+	padding: 37px;
+}
+</style>
+
+<body>
+	<!-- Start Header/Navigation -->
+	<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">Halang<span>.</span></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+				aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarsFurni">
+				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+					<li><a class="nav-link" href="/">Home</a></li>
+					<li><a class="nav-link" href="/products">Shop</a></li>
+					<li><a class="nav-link" href="about.html">About us</a></li>
+					<li><a class="nav-link" href="services.html">Services</a></li>
+					<li><a class="nav-link" href="blog.html">Contact us</a></li>
+
+				</ul>
+				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+					<li><a class="nav-link" href="/profile"><img src="uiHome/images/user.svg"></a></li>
+					<li><a class="nav-link" href="/cart"><img src="uiHome/images/cart.svg"></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+
+
+	<!-- breadcrumb -->
+	<div class="container" style="padding-bottom: 70px;">
+		<h1 style="padding-top: 40px;">Manage Addresses</h1>
+
+		<!-- Address Listing -->
+		<div class="address-list">
+			<!-- First Row -->
+			<div class="row">
+
+				<!-- Sample Address 1 -->
+				<div class="row">
+					<% for (let i=0; i < user.address.length; i++) { %>
+						<div  class="col-md-6" data-id="<%=i %>">
+							<div class="address-container">
+								<div>
+									<h4>Name: <%= user.address[i].name %>
+									</h4>
+									<p>Phone number: <%= user.address[i].tel %>
+									</p>
+									<p>City: <%= user.address[i].city %>
+									</p>
+									<p>State: <%= user.address[i].state %>
+									</p>
+									<p>Pincode: <%= user.address[i].pincode %>
+									</p>
+									<p>House: <%= user.address[i].address %>
+									</p>
+								</div>
+								<div>
+
+								
+
+									<a href="/editaddress/<%= i %>" class="edit-address-button">Edit Address</a>
+
+
+									<a href="/deleteAddress/<%= i %>" class="delete-address-button" >Delete</a>
+
+								</div>
+							</div>
+						</div>
+						<% } %>
+
+
+				</div>
+
+
+			</div>
+		</div>
+		<% if (user.address.length < 4) { %>
+			<button class="add-button"><a href="/address" >Add Address</a></button>
+		<% } else { %>
+			<p>You have reached the maximum address limit. Please edit or delete an existing address to add a new one.</p>
+		<% } %>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		const addresses=document.querySelectorAll('#address')
+		console.log(address)
+
+		addresses.forEach((address,index)=>{
+			
+			let adIndex=address.value
+			
+			address.addEventListener('click',function (event) {
+				localStorage.setItem('addressIndex',adIndex)
+			})
+			
+		})
+	</script>
+
+<%- include('../layouts/partials/footer.ejs') %>

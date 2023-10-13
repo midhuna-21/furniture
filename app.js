@@ -6,7 +6,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const multer = require("multer");
-const nocache = require("nocache");
+const nocache = require('nocache'); 
 const fileUpload = require("express-fileupload");
 const connectDB = require("./config/connection");
 const configs = require("./config/config");
@@ -16,13 +16,15 @@ const adminRouter = require("./routes/adminRoute");
 
 const app = express();
 
+app.use(nocache());
 app.use(
     session({
-        secret: configs.sessionSecret,
+        secret: 'your secret key',
         resave: false,
-        saveUninitialized: false,
+        saveUninitialized: true,
     })
 );
+
 
 // view engine setup
 
@@ -45,9 +47,12 @@ app.use("/", userRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    next(createError(404));
-});
+// app.use(function (req, res, next) {
+//     next(createError(404));
+// });
+app.use((req, res, next) => {
+    res.status(404).render('error'); 
+    });
 
 // error handler
 app.use(function (err, req, res, next) {

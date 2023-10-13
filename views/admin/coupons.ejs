@@ -1,0 +1,88 @@
+<%- include('../layouts/slidebar.ejs') %>
+
+<style>
+    .btn-fixed-size {
+    width: 110px; 
+    height: 30px; 
+}
+</style>
+<section class="content-main" style=" background-color: #f8f8f8;width: 1200px;">         
+        <section class="content-main">
+            <div class="content-header">
+                <h2 class="content-title">Coupons </h2>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <header class="border-bottom mb-4 pb-4">
+                                <div class="row">
+                                    <!-- <div class="col-lg-5 col-6 me-auto">
+                                        <input type="text" placeholder="Search..." class="form-control">
+                                    </div> -->
+                                    <div class="col-lg-2 col-6">
+                                        <!-- <select class="form-select">
+                                            <option>CouponCode</option>
+                                            <option>Discount</option>
+                                            <option></option>
+                                            <option>Min Amount</option>
+                                            <option>Expiration Date</option>
+                                        </select> -->
+                                    </div>
+                                </div>
+                            </header> <!-- card-header end// -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>CouponCode</th>
+                                            <th>Discount</th>
+                                            <th>Max Discount</th>
+                                            <th >Min Amount</th>
+                                            <th> Expiration Date </th>
+                                            <th>Action</th>                                       
+                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% coupons.forEach(function(coupon) { %>
+                                            <tr>
+                                                <td><%= coupon.couponCode %></td>
+                                                <td><%= coupon.discount %></td>
+                                                <td><%= coupon.maxDiscount %></td>
+                                                <td><%= coupon.minAmount %></td>
+                                                <td ><%= coupon.expirationDate.toDateString() %></td>
+                                                <td> 
+                                                    <a href="/admin/edit-coupon/<%= coupon._id %>" class="btn btn-primary btn-fixed-size">Edit</a>
+                                                    
+                                                    <% if (coupon.isListed) { %>
+                                                        <form action="/admin/unListCoupon" method="POST">
+                                                          <input type="hidden" name="couponId" value="<%= coupon._id %>">
+                                                          <button type="submit" class="btn btn-sm btn-danger btn-fixed-size">Unlist</button>
+                                                        </form>
+                                                      <% } else { %>
+                                                        <form action="/admin/listCoupon" method="POST">
+                                                          <input type="hidden" name="couponId" value="<%= coupon._id %>">
+                                                          <button type="submit" class="btn btn-sm btn-success btn-fixed-size">List</button>
+                                                        </form>
+                                                      <% } %>
+                                                      
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div> <!-- table-responsive.// -->
+                        </div> <!-- col end// -->
+                        <!-- <aside class="col-lg-3">
+                            <div class="box bg-light" style="min-height:80%">
+                                <p class="text-center text-muted my-5">Please select transaction <br> to see details</p>
+                            </div>
+                        </aside> col end// -->
+                    </div> <!-- row end// -->
+                </div> <!-- card-body // -->
+            </div> <!-- card end// -->
+         
+        </section>
+      
+
+        <%- include('../layouts/slidefooter.ejs') %>

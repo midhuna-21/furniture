@@ -2,25 +2,19 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 const User = require('../models/userModel');
 const Product = require('../models/productModel')
-const Order = require('../models/orderModel');
-const Cart = require('../models/cartModel')
-const Coupon = require("../models/couponModel");
-const userController = require('../controllers/userController');
-
 
 // login
 const logAdmin = async(req, res)=>{
     try{
-        res.render('admin/adminLogin')
+        if(req.session.admin_id){
+            res.redirect('/admin/dashboard')
+        }else{
+            res.render('admin/adminLogin')
+        }
     }catch(error){
-        console.log(error.message)
+        res.render('/error')
     }
 }
-//infinite looping in js
-// i=0;
-// while(i == i){
-//     console.log("Hai midhuna")
-// }
 
 // verify login
 const verifyAdminLogin = async(req, res)=>{
@@ -30,52 +24,51 @@ const verifyAdminLogin = async(req, res)=>{
         const email = req.body.email;
         const password = req.body.password;
         
-        const adminData = await User.findOne({email:email});
+        const adminData = await User.findOne({email:email, is_admin: true});
         
         if(adminData){
-            console.log('jnfkj')
+      
             const passwordMatch = await bcrypt.compare(password, adminData.password);
             if(passwordMatch){
                 if(adminData.is_admin === false){
-                    res.render('admin/adminLogin',{message:"please verify your mail."});
+                    res.json({success: false,email:"please verify your mail."});
                 }else{
-                    console.log('work');
-                    req.session.user_id = adminData._id;
+                   
+                    req.session.admin_id = adminData._id;
                     req.session.admin = adminData;
-                    const products = await Product.find()
-                    res.redirect('/admin/products');
+                    res.json({success: true});
                 }
             }else{
-                res.render('admin/adminLogin',{messages:"Email and password is incorrect"}) 
+                res.json({success: false, password: "password is wrong"}) 
             }
         }else{
-            res.render('admin/adminLogin',{messages:"Email and password is incorrect"})
+            res.json({success: false,email:"Email  is incorrect"})
         }
     }catch(error){
         console.log(error.message)
+        res.status(500).json({message:"Internal server error"})
     }
 }
 // users list
 const getUsers = async(req, res) =>{
     try{
-        console.log('jdgkjsnd')
-        const users = await User.find();
-        res.render('admin/adminUsers',{users}); //passing the userdata to the ejs file
+        const users = await User.find({is_admin: false});
+        res.render('admin/adminUsers',{users}); 
     }catch(error){
-        console.log(error.message);
+        res.render('/error')
     }
 }
 
 const blockUnblock = async (req, res) => {
    
     try {
-        const id = req.params.id; // Use req.params.id to access route parameter
+        const id = req.params.id; 
         console.log(id);
         const user = await User.findById(id);
         if (!user) {
             return res.status(404).send('User not found');
         }
-        // Toggle isActive
+        
         user.isActive = !user.isActive;
         await user.save();
         res.redirect('/admin/users');
@@ -93,29 +86,10 @@ const adminLogout = async(req, res)=>{
     try{
         res.redirect('/admin/login')
     }catch(error){
-        console.log(error.message)
+        res.render('/error')
     }
 }
 
-
-// const orderStatus = async(req, res)=>{
-//     try{
-//         const orderId = req.params.orderId;
-//         const newStatus = req.body.newStatus;
-
-//         const order = await Order.findById(orderId);
-//         if (!order) {
-//             return res.status(404).json({ success: false, message: 'Order not found' });
-//         }
-
-//         order.status = newStatus;
-//         await order.save();
-
-//         res.redirect('/admin/order',{}); 
-//     }catch(error){
-//         consol.elog(error.message)
-//     }
-// }
 module.exports = {
     logAdmin,
     verifyAdminLogin,
@@ -123,5 +97,4 @@ module.exports = {
     blockUnblock,
     adminLogout,
   
-    // orderStatus
 }

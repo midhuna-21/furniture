@@ -40,6 +40,10 @@ const productSchema = new mongoose.Schema({
     isListed:{
         type:Boolean,
         default: false
+    },
+    isWishlist:{
+        type:Boolean,
+        default: false
     }
 })
 
